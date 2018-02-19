@@ -14,6 +14,14 @@ function isMember()
 
 function isStaff()
 {
+	$ci =& get_instance();
+
+	if ($ci->session->userdata('id')) {
+		$rs = $ci->db->where('id', $ci->session->userdata('id'))->get('member');
+		if ($rs->row()->isstaff=='Y') 
+			return true;
+	}
+
 	return false;
 }
 

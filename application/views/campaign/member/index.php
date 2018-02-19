@@ -4,7 +4,7 @@
 		<div class="col-md-12">
 			<ol class="breadcrumb">
 			  <li><a href="<?php echo site_url();?>">หน้าหลัก</a></li>
-			  <li class="active">ข้อมูลสมาชิก</li>
+			  <li class="active">ข้อมูล Campaign</li>
 			</ol>
 		</div>
 
@@ -19,54 +19,56 @@
 		</div>
 		<div class='col-md-9'>
 			<div class="panel panel-default">
-			  <div class="panel-heading">ข้อมูลผู้ใช้งาน</div>
+			  <div class="panel-heading">ข้อมูล Campaign</div>
 			  <div class="panel-body">
 
-			  	<?php echo save();?>
-			  	
-			  	<?php echo form_open('member/update', array('id' => 'memberupdate'));?>
+			  	<table class="table table-bordered table-striped">
+			  		<thead>
+			  			<tr>
+			  				<th>ชื่อแคมเปญ</th>
+			  				<th>จำนวนผู้ใช้งาน</th>
+			  				<th>Lucky Draw</th>
+			  				<th><i class="fa fa-edit"></i></th>
+			  			</tr>
+			  		</thead>
+			  		<tbody>
+			  			<?php if (count($rs) == 0):?>
+			  				<tr><td colspan="4" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  			<?php else:?>
+			  				<?php foreach($rs as $r):?>
+			  					<tr>
+			  						<td><?php echo $r->campaign_name;?><br><?php echo $r->on_date.' ถึง '.$r->end_date;?></td>
+			  						<td style="text-align: center"><?php echo $r->total_user;?> คน</td>
+			  						<td style="text-align: center;">
+			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw == '0' ? 'ไม่มีจับรางวัล' : 'Y';?></span>
+			  						</td>
 
-				  <div class="form-group col-md-12">
-				    <label for="username">ชื่อผู้ใช้งาน</label>
-				    <input type="text" class="form-control required" value="<?php echo $r->username;?>" readonly id="username" name="username" maxlength="50" minlength="1" placeholder="ชื่อผู้ใช้งาน">
-				  </div>
+			  						<td style="text-align: center;">
+			  							<div class="btn-group">
+			  								
 
-				  <div class="form-group col-md-6">
-				    <label for="password">รหัสผ่าน</label>
-				    <input type="password" class="form-control" minlength="4" maxlength="20" id="password" name="password" placeholder="รหัสผ่าน">
-				  </div>
+			  								<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="caret"></span>
+										    <span class="sr-only">Toggle Dropdown</span>
+										  </button>
+										  <ul class="dropdown-menu">
+										    <?php if ($r->lucky_draw == '1'):?>
+										    	<li><a href="<?php echo site_url('campaign/imp_prize/'.$r->campaign_id);?>">นำเข้าของรางวัล</a></li>
+										    <?php endif;?>
+										    <li><a href="<?php echo site_url('campaign/imp_member/'.$r->campaign_id);?>">นำเข้ารายชื่อ</a></li>
+										  </ul>
+			  								
+			  							</div>
+			  						</td>
 
-				  <div class="form-group col-md-6">
-				    <label for="confirm_password">ยืนยันรหัสผ่าน</label>
-				    <input type="password" class="form-control " minlength="4" maxlength="20"  name="confirm_password" id="confirm_password" placeholder="รหัสผ่าน">
-				  </div>
+			  						
+			  					</tr>
+			  				<?php endforeach;?>
+			  			<?php endif;?>
+			  		</tbody>
+			  		
+			  	</table>
 
-				 
-
-				  <div class="form-group col-md-12">
-				    <label for="name">ชื่อ</label>
-				    <input type="text" class="form-control required" value="<?php echo $r->name;?>" id="name" name="name" placeholder="ชื่อผู้ใช้งาน">
-				  </div>
-
-				  
-
-				  <div class="form-group col-md-12">
-				    <label for="email">อีเมล์</label>
-				    <input type="text" class="form-control required" value="<?php echo $r->email;?>"  id="email" name="email" placeholder="อีเมล์">
-				  </div>
-
-				  <div class="form-group col-md-6">
-				    <label for="mobile">เบอร์โทรศัพท์</label>
-				    <input type="text" class="form-control required" value="<?php echo $r->mobile;?>" id="mobile" maxlength="20" minlength="10" name="mobile" placeholder="">
-				  </div>
-
-				  
-				  
-				  <div class='col-md-12'>
-					  <button type="submit" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> ปรับปรุงข้อมูล</button><br><br>
-				  </div>
-
-				<?php echo form_close();?>
 			  </div>
 			</div>
 		</div>

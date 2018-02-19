@@ -11,16 +11,23 @@ class Auth_model extends CI_Model {
 		))->get('member');
 
 		if ($rs->num_rows() > 0) {
-			if ($this->expire($rs->row()->id)) {
-				$this->session->set_flashdata('expire', 1);
-				return false;
+			if ($rs->row()->isstaff == 'Y') {
+				$this->session->set_userdata('id', $rs->row()->id);
+				return true;
 			} else {
-				if ($rs->row()->active == 0) {
+
+
+				if ($this->expire($rs->row()->id)) {
 					$this->session->set_flashdata('expire', 1);
 					return false;
 				} else {
-					$this->session->set_userdata('id', $rs->row()->id);
-					return true;
+					if ($rs->row()->active == 0) {
+						$this->session->set_flashdata('expire', 1);
+						return false;
+					} else {
+						$this->session->set_userdata('id', $rs->row()->id);
+						return true;
+					}
 				}
 			}
 		}

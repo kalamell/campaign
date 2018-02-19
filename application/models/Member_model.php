@@ -11,15 +11,29 @@ class Member_model extends CI_Model {
 		$this->id = $this->session->userdata('id');
 	}
 
-	public function getProfile()
+	public function fetchAll()
 	{
-		$rs = $this->db->where('id', $this->id)->get('member');
+		return $this->db->get('member')->result();
+	}
+	public function getProfile($id = '')
+	{
+		if ($id !='') {
+			$this->db->where('id', $id);
+		} else {
+			$this->db->where('id', $this->id);
+		}
+		$rs = $this->db->get('member');
 		return $rs->row();
 	}
 
-	public function update($data)
+	public function update($data, $id = '')
 	{
-		return $this->db->where('id', $this->id)->update('member', $data);
+		if ($id !='') {
+			$this->db->where('id', $id);
+		} else {
+			$this->db->where('id', $this->id);
+		}
+		return $this->db->update('member', $data);
 	}
 
 	public function getCampaign($member_id = '')
@@ -42,4 +56,10 @@ class Member_model extends CI_Model {
 		}
 
 	}
+
+	public function save($data)
+	{
+		$this->db->insert('member', $data);
+	}
+
 }

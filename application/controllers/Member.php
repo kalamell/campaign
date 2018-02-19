@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Member extends Campaign {
+class Member extends Front {
 
 	public function index()
 	{
