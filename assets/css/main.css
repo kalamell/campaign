@@ -1,0 +1,19 @@
+@media (max-width: 768px) { 
+	a.navbar-brand { color: transparent !important;  }
+}
+
+label.error { color: red !important;  }
+
+.nav>li.active>a {
+    text-decoration: none;
+    background-color: #00c4ff;
+    color:#fff;
+    font-weight: 900;
+}
+
+.page-header { font-size: 24px; }
+
+th {
+	    vertical-align: middle !important;
+    text-align: center;
+}
