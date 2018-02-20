@@ -62,4 +62,20 @@ class Member_model extends CI_Model {
 		$this->db->insert('member', $data);
 	}
 
+
+	public function dep($dep_name, $campaign_id)
+	{
+		$rs = $this->db->where('dep_name', $dep_name)->where('campaign_id', $campaign_id)->get('department');
+		if ($rs->num_rows() > 0) {
+			return $rs->row()->dep_id;
+		} else {
+			$this->db->insert('department', array(
+				'dep_name' => $dep_name,
+				'campaign_id' => $campaign_id
+			));
+
+			return $this->db->insert_id();
+		}
+	}
+
 }

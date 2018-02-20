@@ -31,12 +31,12 @@
 			  	<table class="table table-bordered table-striped">
 			  		<thead>
 			  			<tr>
+			  				<th width="120">&nbsp;</th>
 			  				<th>ชื่อแคมเปญ</th>
 			  				<th>จำนวนผู้ใช้งาน</th>
 			  				<th width="120" >Lucky Draw</th>
 			  				<th>เจ้าของ</th>
 			  				<th>วันเริ่ม - จบ แคมเปญ</th>
-			  				<th width="120">&nbsp;</th>
 			  			</tr>
 			  		</thead>
 			  		<tbody>
@@ -45,15 +45,6 @@
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
-			  						<td><?php echo $r->campaign_name;?></td>
-			  						<td style=""><?php echo $r->total_user;?> คน</td>
-			  						<td style="text-align: center;">
-			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw == '1' ? 'Y' : 'N';?></span>
-			  						</td>
-			  						<td><?php echo $r->name.'<br>'.$r->mobile;?></td>
-
-			  						<td><?php echo $r->on_date.' ถึง '.$r->end_date;?></td>
-
 			  						<td style="text-align: center;">
 			  							<div class="btn-group">
 			  								<a href="<?php echo site_url('backend/campaign/edit/'.$r->campaign_id);?>" class="btn btn-default btn-sm"><i class="fa fa-edit"></i></a>
@@ -65,15 +56,27 @@
 										  </button>
 										  <ul class="dropdown-menu">
 										    <?php if ($r->lucky_draw == '1'):?>
-										    	<li><a href="<?php echo site_url('backend/campaign/imp_prize/'.$r->campaign_id);?>">นำเข้าของรางวัล</a></li>
+										    	<li><a href="<?php echo site_url('backend/campaign/imp_prize/'.$r->campaign_id);?>">ของรางวัล</a></li>
 										    <?php endif;?>
-										    <li><a href="<?php echo site_url('backend/campaign/imp_member/'.$r->campaign_id);?>">นำเข้ารายชื่อ</a></li>
+										    <li><a href="<?php echo site_url('backend/campaign/imp_member/'.$r->campaign_id);?>">รายชื่อ</a></li>
 										  </ul>
 			  								
 			  							</div>
 			  						</td>
 
 
+
+
+			  						<td><?php echo $r->campaign_name;?></td>
+			  						<td style=""><?php echo $r->total_user;?> คน</td>
+			  						<td style="text-align: center;">
+			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw == '1' ? 'Y' : 'N';?></span>
+			  						</td>
+			  						<td><?php echo $r->name.'<br>'.$r->mobile;?></td>
+
+			  						<td><?php echo $r->on_date.' ถึง '.$r->end_date;?></td>
+
+			  						
 			  						
 			  					</tr>
 			  				<?php endforeach;?>

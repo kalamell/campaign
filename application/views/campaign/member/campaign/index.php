@@ -25,6 +25,7 @@
 			  	<table class="table table-bordered table-striped">
 			  		<thead>
 			  			<tr>
+			  				<th width="120">&nbsp;</th>
 			  				<th>ชื่อแคมเปญ</th>
 			  				<th>จำนวนผู้ใช้งาน</th>
 			  				<th>Lucky Draw</th>
@@ -36,10 +37,29 @@
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
+			  						<td style="text-align: center;">
+			  							<div class="btn-group">
+			  								
+
+			  								<button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+										    <span class="caret"></span>
+										    <span class="sr-only">Toggle Dropdown</span>
+										  </button>
+										  <ul class="dropdown-menu">
+										    <?php if ($r->lucky_draw == '1'):?>
+										    	<li><a href="<?php echo site_url('member/imp_prize/'.$r->campaign_id);?>">ของรางวัล</a></li>
+										    <?php endif;?>
+										    <li><a href="<?php echo site_url('member/imp_member/'.$r->campaign_id);?>">รายชื่อ</a></li>
+										  </ul>
+			  								
+			  							</div>
+			  						</td>
+
+
 			  						<td><?php echo $r->campaign_name;?></td>
 			  						<td style="text-align: center"><?php echo $r->total_user;?> คน</td>
 			  						<td>
-			  							<span class="label label-<?php echo $r->lucky_draw == 'N'? 'default' : 'success';?>"><?php echo $r->lucky_draw;?></span>
+			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw;?></span>
 			  						</td>
 
 			  						
