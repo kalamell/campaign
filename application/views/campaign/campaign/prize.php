@@ -22,7 +22,12 @@
 			  	<input type="hidden" name="campaign_id" value="<?php echo $f->campaign_id;?>">
 
 			  	<div class="form-group">
-			  		<input type="file" class="form-control" name="file"> <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button> <a href="<?php echo site_url('member/reset_prize/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">Reset การจับรางวัล</a>
+			  		<input type="file" class="form-control" name="file"> <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button> 
+
+			  		<a href="<?php echo site_url('member/reset_prize/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">Reset การจับรางวัล</a>
+
+
+			  		
 			  		
 			  	</div>
 

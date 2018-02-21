@@ -167,6 +167,14 @@ class Member extends Front {
 
 	}
 
+	public function delete_staff($campaign_id, $member_id)
+	{
+
+		$this->db->where('id', $member_id)->where('campaign_id', $campaign_id)->delete('staff');
+		redirect('member/imp_member/'.$campaign_id);
+
+	}
+
 	public function reset_prize($campaign_id)
 	{
 		$this->db->where('prize_id', $prize_id)->set('prize_id', null)->update('staff');

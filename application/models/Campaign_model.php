@@ -38,7 +38,7 @@ class Campaign_model extends CI_Model {
 
 	public function getStaff($campaign_id)
 	{
-		return $this->db->select('*,staff.name, staff.id as id, staff.staff_id as staff_id, prize.name as prize_name')->where('staff.campaign_id', $campaign_id)
+		return $this->db->select('*,staff.name, staff.id as id, staff.staff_id as staff_id, prize.name as prize_name, staff.campaign_id')->where('staff.campaign_id', $campaign_id)
 			->join('department', 'staff.dep_id = department.dep_id', 'LEFT')
 			->join('prize', 'staff.staff_id = prize.staff_id', 'LEFT')->order_by('staff.staff_id', 'asc')->get('staff')->result();
 	}
