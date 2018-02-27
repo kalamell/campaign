@@ -43,7 +43,7 @@ class Member_model extends CI_Model {
 		} else {
 			$this->db->where('member_id', $this->id);
 		}
-
+		$this->db->select('*,(SELECT COUNT(staff_id) FROM staff where staff.campaign_id = campaign.campaign_id AND checkin IS NULL) as notcome,(SELECT COUNT(staff_id) FROM staff where staff.campaign_id = campaign.campaign_id AND checkin IS NOT NULL) as comein');
 		return $this->db->get('campaign')->result();
 	}
 

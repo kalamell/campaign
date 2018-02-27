@@ -12,8 +12,7 @@
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.validate.min.js"></script>
 <script type="text/javascript" src="<?php echo base_url();?>assets/js/datetimepicker/moment.js"></script>
 	<script type="text/javascript" src="<?php echo base_url();?>assets/js/datetimepicker/bootstrap-datetimepicker.min.js"></script>
-	<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCpKdMqkUBho4XDmt4SiAAvTSB1cVJ-U5I&signed_in=true&callback=initMap" type="text/javascript"></script>
-
+	
 
 	<script type="text/javascript">
 		jQuery.extend(jQuery.validator.messages, {
@@ -35,29 +34,77 @@
 		    max: jQuery.validator.format("Please enter a value less than or equal to {0}."),
 		    min: jQuery.validator.format("Please enter a value greater than or equal to {0}.")
 		});
+
+
+		$(document).on('click', '#save_add_prize', function() {
+			$.post('<?php echo site_url('member/save_add_prize');?>', $("#frmsaveprize").serialize(), function() {
+				top.location.reload();
+			});
+		});
+
+		$(document).on('click', '#checkall', function() {
+			$("input[type=checkbox]").prop('checked', $(this).prop('checked'));
+		})
+
+
+		$(document).on('click', '#save_update_prize', function() {
+			$.post('<?php echo site_url('member/update_add_prize');?>', $("#frmupdateprize").serialize(), function() {
+				top.location.reload();
+			});
+		});
+
+
+		$(document).on('click', '#save_member', function() {
+				
+			$.post('<?php echo site_url('member/save_member');?>', { 
+				'campaign_id': $("#campaign_id").val(),
+				'staff_code': $("#staff_code").val(),
+				'staff_id': $("#staff_id").val(),
+				'name': $("#name").val(),
+				'email': $("#email").val(),
+				'dep_name': $("#dep_name").val(),
+				'email': $("#email").val(),
+				'mobile': $("#mobile").val(),
+				'position': $("#position").val(),
+				'checkin': $("#checkin:checked").val(),
+				'no_prize': $("#no_prize:checked").val(),
+			 }, function(res) {
+				
+				top.location.reload();
+			})
+		});
+
+		$(document).on('click', '#save_member_edit', function() {
+				
+			$.post('<?php echo site_url('member/update_member');?>', { 
+				'id': $("#id").val(),
+				'campaign_id': $("#campaign_id").val(),
+				'staff_id': $("#staff_id").val(),
+				'staff_code': $("#staff_code").val(),
+				'name': $("#name").val(),
+				'email': $("#email").val(),
+				'dep_name': $("#dep_name").val(),
+				'email': $("#email").val(),
+				'mobile': $("#mobile").val(),
+				'position': $("#position").val(),
+				'checkin': $("#checkin:checked").val(),
+				'no_prize': $("#no_prize:checked").val(),
+			 }, function(res) {
+				
+				top.location.reload();
+			})
+		});
+
+
+
+
+
 		$(function() {
 
-			$("#md").on('show.bs.modal', function(e) {
-	           // e.preventDefault();
-	            var link = $(e.relatedTarget);
-	           
-	            $(this).find('.modal-body').load(link.attr('href'));
+			$("#myModal").on('show.bs.modal', function(e) {
+	           var link = $(e.relatedTarget);
+	           $(this).find('.modal-content').load(link.attr('href'));
 	        })
-
-			$("#save_room").on('click', function() {
-				
-				$.post('<?php echo site_url('member/save_room');?>', { 
-					'term_id': '<?php echo $this->uri->segment(3);?>',
-					'year_id': '<?php echo $this->uri->segment(4);?>',
-					'room_no': $("#room_no").val(),
-					'room_boy': $("#room_boy").val(),
-					'room_girl': $("#room_girl").val(),
-					'rmid': $("#rmid").val(),
-				 }, function() {
-					top.location.href="<?php echo site_url('member/school/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'#tab7');?>";
-					top.location.reload();
-				})
-			});
 
 
 			if(window.location.hash != "") {
@@ -153,48 +200,7 @@
 
 		});
 
-		$(function() {
-			//getSchool();
-
-			$("a.delete-level").on('click', function() {
-				var ssid = $(this).attr('data-id');
-				var conf = confirm('ต้องการลบหรือไม่');
-
-				if (conf) {
-
-					$.post('<?php echo site_url('member/delete_level');?>', { ssid, ssid }, function() {
-						top.location.reload();
-					});
-				}
-			})
-
-			$("#list_area_id").on('change', function() {
-				getSchool();
-			})
-
-			$("#save_level").on('click', function() {
-				var data = {
-					level: $("#level").val(),
-					boy: $("#boy").val(),
-					girl: $("#girl").val(),
-					school_main_name: $("#school_main_name").val()
-				}
-				$.post('<?php echo site_url('member/save_room_level');?>', data, function() {
-					top.location.href="<?php echo site_url('member/school/'.$this->uri->segment(3).'/'.$this->uri->segment(4).'#tab2');?>"
-					top.location.reload();
-				});
-			})
-		})
-
-		function getSchool() {
-			var area_id = $("#list_area_id").val();
-			$("#school_sub_id").html('<option value=""> เลือกโรงเรียน </option>');
-			$.post('<?php echo site_url('auth/list_school_area');?>', { area_id : area_id }, function(res) {
-				$.each(res, function(key, v) {
-					$('<option value="' + v.school_id +'">' + v.school_name + '</option>').appendTo($("#school_sub_id"));
-				});
-			}, 'json');
-		}
+		
 
 	</script>
 

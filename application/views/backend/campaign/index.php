@@ -41,7 +41,7 @@
 			  		</thead>
 			  		<tbody>
 			  			<?php if (count($rs) == 0):?>
-			  				<tr><td colspan="5" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  				<tr><td colspan="6" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>

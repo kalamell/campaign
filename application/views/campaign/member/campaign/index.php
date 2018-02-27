@@ -25,15 +25,17 @@
 			  	<table class="table table-bordered table-striped">
 			  		<thead>
 			  			<tr>
-			  				<th width="120">&nbsp;</th>
+			  				<th><i class="fa fa-edit"></i></th>
 			  				<th>ชื่อแคมเปญ</th>
-			  				<th>จำนวนผู้ใช้งาน</th>
+			  				<th>เข้างาน</th>
+			  				<th>ยังไม่เข้างาน</th>
 			  				<th>Lucky Draw</th>
+			  				<th>ลงทะเบียน</th>
 			  			</tr>
 			  		</thead>
 			  		<tbody>
 			  			<?php if (count($rs) == 0):?>
-			  				<tr><td colspan="4" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  				<tr><td colspan="6" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
@@ -47,20 +49,26 @@
 										  </button>
 										  <ul class="dropdown-menu">
 										    <?php if ($r->lucky_draw == '1'):?>
-										    	<li><a href="<?php echo site_url('member/imp_prize/'.$r->campaign_id);?>">ของรางวัล</a></li>
+										    	<li><a href="<?php echo site_url('member/imp_prize/'.$r->campaign_id);?>">นำเข้าของรางวัล</a></li>
 										    <?php endif;?>
-										    <li><a href="<?php echo site_url('member/imp_member/'.$r->campaign_id);?>">รายชื่อ</a></li>
+										    <li><a href="<?php echo site_url('member/imp_member/'.$r->campaign_id);?>">นำเข้ารายชื่อ</a></li>
 										  </ul>
 			  								
 			  							</div>
 			  						</td>
 
-
-			  						<td><?php echo $r->campaign_name;?></td>
-			  						<td style="text-align: center"><?php echo $r->total_user;?> คน</td>
-			  						<td>
-			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw;?></span>
+			  						<td><?php echo $r->campaign_name;?><br><?php echo $r->on_date.' ถึง '.$r->end_date;?></td>
+			  						<td style="text-align: center"><?php echo $r->comein;?> คน</td>
+			  						<td style="text-align: center"><?php echo $r->notcome;?> คน</td>
+			  						<td style="text-align: center;">
+			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw == '0' ? 'ไม่มีจับรางวัล' : 'Y';?></span>
 			  						</td>
+
+			  						<td style="text-align: center;">
+			  							<a target="_blank" href="<?php echo site_url('member/register/'.$r->campaign_id);?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>
+			  						</td>
+
+			  						
 
 			  						
 			  					</tr>

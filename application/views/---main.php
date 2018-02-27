@@ -28,11 +28,12 @@
 			  				<th>ชื่อแคมเปญ</th>
 			  				<th>จำนวนผู้ใช้งาน</th>
 			  				<th>Lucky Draw</th>
+			  				<th>ลงทะเบียนเข้างาน</th>
 			  			</tr>
 			  		</thead>
 			  		<tbody>
 			  			<?php if (count($rs) == 0):?>
-			  				<tr><td colspan="4" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  				<tr><td colspan="5" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
@@ -41,6 +42,11 @@
 			  						<td>
 			  							<span class="label label-<?php echo $r->lucky_draw == 'N'? 'default' : 'success';?>"><?php echo $r->lucky_draw;?></span>
 			  						</td>
+			  						<td style="text-align: center;">
+			  							<a target="_blank" href="<?php echo site_url('member/register/'.$r->campaign_id);?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>
+			  						</td>
+
+			  						
 
 			  						
 			  					</tr>

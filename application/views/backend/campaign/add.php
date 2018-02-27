@@ -28,6 +28,11 @@
 			  	
 			  	<?php echo form_open('backend/campaign/save', array('id' => 'memberupdate'));?>
 
+			  		<div class="form-group col-md-12">
+				    <label for="campaign_id">รหัสแคมเปญ</label>
+				    <input type="text" class="form-control required"  id="campaign_id" name="campaign_id" maxlength="100" minlength="1" value="<?php echo $id;?>">
+				  </div>
+
 				  <div class="form-group col-md-12">
 				    <label for="campaign_name">ชื่อแคมเปญ</label>
 				    <input type="text" class="form-control required" value=""  id="campaign_name" name="campaign_name" maxlength="100" minlength="1" placeholder="ชื่อผู้ใช้งาน">

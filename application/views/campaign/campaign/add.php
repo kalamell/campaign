@@ -30,7 +30,7 @@
 
 				  <div class="form-group col-md-12">
 				    <label for="campaign_name">ชื่อแคมเปญ</label>
-				    <input type="text" class="form-control required" value=""  id="campaign_name" name="campaign_name" maxlength="100" minlength="1" placeholder="ชื่อผู้ใช้งาน">
+				    <input type="text" class="form-control required" value=""  id="campaign_name" name="campaign_name" maxlength="100" minlength="1" placeholder="">
 				  </div>
 
 				  

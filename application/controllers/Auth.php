@@ -42,7 +42,7 @@ class Auth extends CI_Controller {
 				redirect('');
 			}
 		} else {
-			redierct('auth');
+			redirect('auth');
 		}
 	}
 

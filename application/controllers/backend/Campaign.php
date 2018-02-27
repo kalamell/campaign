@@ -11,6 +11,7 @@ class Campaign extends Backend {
 
 	public function add()
 	{
+		$this->id = generateRandomString(5);
 		$this->member = $this->md->fetchAll();
 		$this->render('campaign/add', $this);
 	}
@@ -46,6 +47,7 @@ class Campaign extends Backend {
 	public function save()
 	{
 		$ar = array(
+			'campaign_id' => $this->input->post('campaign_id'),
 			'campaign_name' => $this->input->post('campaign_name'),
 			'total_user' => $this->input->post('total_user'),
 			'member_id' => $this->input->post('member_id'),
