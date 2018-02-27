@@ -26,8 +26,9 @@
 
 			  	<?php echo save();?>
 			  	
-			  	<?php echo form_open('backend/campaign/save', array('id' => 'memberupdate'));?>
+			  	<?php echo form_open_multipart('backend/campaign/save', array('id' => 'memberupdate'));?>
 
+			  	<div class='row'>
 				  <div class="form-group col-md-12">
 				    <label for="campaign_name">ชื่อแคมเปญ</label>
 				    <input type="text" class="form-control required" value=""  id="campaign_name" name="campaign_name" maxlength="100" minlength="1" placeholder="">
@@ -94,6 +95,7 @@
 				  <div class='col-md-12'>
 					  <button type="submit" class="btn btn-info"><i class="glyphicon glyphicon-user"></i> ปรับปรุงข้อมูล</button><br><br>
 				  </div>
+				</div>
 
 				<?php echo form_close();?>
 			  </div>

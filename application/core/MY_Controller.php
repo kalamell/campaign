@@ -24,6 +24,19 @@ class Front extends CI_Controller {
 }
 
 
+class Main_Event extends CI_Controller {
+	public function __construct()
+	{
+		parent::__construct();
+		echo $this->uri->segment(2);
+		
+		$this->load->model('member_model', 'md');		
+		$this->load->model('campaign_model', 'cp');
+	}
+
+	
+}
+
 
 class Backend extends CI_Controller {
 

@@ -65,7 +65,7 @@
 			  						</td>
 
 			  						<td style="text-align: center;">
-			  							<a target="_blank" href="<?php echo site_url('member/register/'.$r->campaign_id);?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>
+			  							<a target="_blank" href="<?php echo site_url('event/'.$r->campaign_id.'/register');?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>
 			  						</td>
 
 			  						
