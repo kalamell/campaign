@@ -24,15 +24,15 @@
 
     <div class="form-group col-md-6">
     	<label>ชนิดบู๊ท</label>
-    	<div class="checkin">
+    	<div class="radio">
     		<label>
-    			<input type="checkbox" name="type_boot" value="register" <?php echo $r->type_boot == 'register' ? 'checked' : '';?> id="type_boot"> สำหรับลงทะเบียน 
+    			<input type="radio" name="type_boot" value="register" <?php echo $r->type_boot == 'register' ? 'checked' : '';?> id="type_boot"> สำหรับลงทะเบียน 
     		</label>
     	</div>
 
-    	<div class="checkin">
+    	<div class="radio">
     		<label>
-    			<input type="checkbox" name="type_boot" value="event" <?php echo $r->type_boot == 'event' ? 'checked' : '';?> id="type_boot"> สำหรับกิจกรรม 
+    			<input type="radio" name="type_boot" value="event" <?php echo $r->type_boot == 'event' ? 'checked' : '';?> id="type_boot"> สำหรับกิจกรรม 
     		</label>
     	</div>
 

@@ -23,15 +23,15 @@
 
     <div class="form-group col-md-6">
     	<label>ชนิดบู๊ท</label>
-    	<div class="checkin">
+    	<div class="radio">
     		<label>
-    			<input type="checkbox" name="type_boot" value="register" id="type_boot"> สำหรับลงทะเบียน 
+    			<input type="radio" name="type_boot" value="register" id="type_boot"> สำหรับลงทะเบียน 
     		</label>
     	</div>
 
-    	<div class="checkin">
+    	<div class="radio">
     		<label>
-    			<input type="checkbox" name="type_boot" value="event" id="type_boot"> สำหรับกิจกรรม 
+    			<input type="radio" name="type_boot" value="event" id="type_boot"> สำหรับกิจกรรม 
     		</label>
     	</div>
 

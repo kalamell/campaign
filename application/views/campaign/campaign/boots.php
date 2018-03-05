@@ -22,42 +22,13 @@
 
 			  	<p><a data-toggle="modal" data-remote="false" data-target="#myModal" href="<?php echo site_url('member/add_boot/'.$f->campaign_id);?>" class="btn btn-success btn-sm"><i class="fa fa-plus"></i> เพิ่มข้อมูล</a></p>
 
-			  	<?php echo form_open('', array('id' => 'frmsearch', 'class' => 'form-inline'));?>
-
-			  		<div class="form-group">
-			  			<label>ค้นหา (รหัสพนักงาน, ชื่อ)</label>
-			  			<input type="text" name="txt" value="<?php echo $txt;?>" class="form-control" style="width: 200px;">
-			  		</div>
-
-			  		<div class="form-group">
-			  			<label>แสดงผลต่อหน้า</label>	
-			  			<select name="per_page" class="form-control">
-			  				<option value="50" <?php echo $this->session->userdata('per_page') == '50' || !$this->session->userdata('per_page') ? 'selected' :'';?>>50</option>
-			  				<option value="100"  <?php echo $this->session->userdata('per_page') == '100' ? 'selected' :'';?>>100</option>
-			  				<option value="1000"  <?php echo $this->session->userdata('per_page') == '1000' ? 'selected' :'';?>>1000</option>
-			  				<option value="3000"  <?php echo $this->session->userdata('per_page') == '3000' ? 'selected' :'';?>>3000</option>
-			  			</select>
-			  		</div>
-
-			  		<button type="submit" class="btn btn-default btn-sm" name="search"> ค้นหา</button>
-			  	<?php echo form_close();?>
-
-			  	<div class="clearfix"></div><br><br>
-
-			  	<p>ผู้เข้างาน : <?php echo $comein;?> คน <br> ยังไม่เข้างาน : <?php echo $notcome;?> คน</p>
-
-
-
-
-
-			  	<?php echo $this->pagination->create_links();?>
+			  	
 
 
 			  	<table class="table table-bordered table-striped">
 			  		<thead>
 			  			<tr>
 			  				
-
 			  				<th width="200">ชื่อบู๊ท</th>
 			  				<th>จำนวนเข้าบู๊ท<br><span style='color: red;'>* 0 เข้าได้ไม่จำกัด</span></th>
 			  				<th>ประเภท</th>
@@ -71,11 +42,10 @@
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
-			  						
 
 			  						<td><?php echo $r->boot_name;?></td>
 			  						<td><?php echo $r->access;?></td>
-			  						<td><?php echo $r->type_boot;?></td>
+			  						<td><?php echo $r->type_boot == 'register' ? 'ลงทะเบียน' : 'บู๊ทกิจกรรม';?></td>
 			  						
 			  						<td width="85">
 			  							<div class='btn-group'>
@@ -92,7 +62,7 @@
 			  		
 			  	</table>
 
-			  	<?php echo $this->pagination->create_links();?>
+			  
 
 			  </div>
 			</div>

@@ -505,6 +505,17 @@ class Member extends Front {
 		));
 	}
 
+	public function delete_boot($campaign_id, $boot_id)
+	{
+		$this->db->where(array(
+			'campaign_id' => $this->input->post('campaign_id'),
+			'boot_id' => $this->input->post('boot_id'),
+		))->delete('boots');
+
+		$this->db->where('boot_id', $boot_id)->delete('boots_access');
+		redirect('member/imp_boot/'.$campaign_id);
+	}
+
 
 	public function prize_group($campaign_id, $prize_id)
 	{
