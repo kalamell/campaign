@@ -126,25 +126,7 @@ class Member extends Front {
         {
         	$data = $this->upload->data();
 
-        	/*
-        				$src = base_url('upload/'.$data['file_name']);
-			$lines 	= file($src);
-			foreach($lines as $k => $line) {
-				
-				if ($k > 0) {
-					list($code, $name, $position, $dep_name, $mobile, $email) = explode(",", $line);
-					$this->db->insert('staff', array(
-						'staff_id' => $code,
-						'name' => $name,
-						'position' => $position,
-						'dep_id' => $this->md->dep($dep_name, $this->input->post('campaign_id')),
-						'mobile' => $mobile,
-						'email' => $email,
-						'campaign_id' => $this->input->post('campaign_id'),
-					));
-				}
-			}
-			*/
+        	
 			
 			$handle = fopen("./upload/".$data['file_name'], "r");
 			$k = 0;
@@ -217,7 +199,7 @@ class Member extends Front {
 				    	
 				    	$code = 'U'.sprintf('%04d', $k);
 
-				    	$chk = $this->db->where('staff_id', $code)->get('staff');
+				    	$chk = $this->db->where('staff_id', $code)->where('campaign_id', $this->input->post('campaign_id'))->get('staff');
 				    	if ($chk->num_rows() ==0) {
 				    		
 							$this->db->insert('staff', array(
@@ -236,7 +218,7 @@ class Member extends Front {
 							//echo $this->db->last_query();
 						} else {
 							
-							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
+							$this->db->where('staff_id', $chk->row()->staff_id)->where('campaign_id', $this->input->post('campaign_id'))->update('staff', array(
 								'staff_code' => $staff_code,
 								'name' => $name,
 								'shop_name' => $shop_name,
