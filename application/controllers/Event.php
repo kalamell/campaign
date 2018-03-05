@@ -37,7 +37,7 @@ class Event extends CI_Controller {
 	}
 
 
-	public function confirm()
+	public function confirm($campaign_id)
 	{
 		
 		$config = array(
@@ -51,15 +51,15 @@ class Event extends CI_Controller {
 		$this->form_validation->set_rules($config);
 		if ($this->form_validation->run()) {
 			$id = $this->getid();
-			$this->db->like('staff_id', $this->input->post('code'))->set('checkin', 'NOW()', false)->update('staff', array(
+			$this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->set('checkin', 'NOW()', false)->update('staff', array(
 				//'staff_code' => $id,
 
 			));
 
-			$rs = $this->db->like('staff_id', $this->input->post('code'))->get('staff');
+			$rs = $this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->get('staff');
 
 			$ar = array(
-				'staff_code' => $id,
+				'staff_code' => $rs->row()->staff_id,
 				'data' => $rs->row_array()
 			);
 		}
@@ -82,10 +82,11 @@ class Event extends CI_Controller {
 
 	public function code($campaign_id, $staff_code)
 	{
-		$rs = $this->db->like('staff_code', $staff_code)->get('staff');
+		$rs = $this->db->like('staff_id', $staff_code)->get('staff');
 
 		
 		
+
         if ($rs->num_rows()>0) {
         	$this->r = $rs->row();
             $this->load->view('register/id', $this);

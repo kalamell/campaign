@@ -32,6 +32,7 @@
 			  		<thead>
 			  			<tr>
 			  				<th width="120">&nbsp;</th>
+			  				<th>ID</th>
 			  				<th>ชื่อแคมเปญ</th>
 			  				<th>จำนวนผู้ใช้งาน</th>
 			  				<th width="120" >Lucky Draw</th>
@@ -64,9 +65,7 @@
 			  								
 			  							</div>
 			  						</td>
-
-
-
+			  						<td><?php echo $r->campaign_id;?></td>
 
 			  						<td><?php echo $r->campaign_name;?></td>
 			  						<td style=""><?php echo $r->total_user;?> คน</td>

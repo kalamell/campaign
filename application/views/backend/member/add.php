@@ -66,13 +66,13 @@
 
 				  <div class="form-group col-md-6">
 				    <label for="confirm_password">วันที่เริ่ม</label>
-				    <input type="text" class="form-control date" name="startdate" id="startdate" placeholder="รหัสผ่าน">
+				    <input type="text" class="form-control date" name="startdate" id="startdate" placeholder="">
 				  </div>
 
 
 				  <div class="form-group col-md-6">
 				    <label for="confirm_password">วันที่สิ้นสุด</label>
-				    <input type="text" class="form-control date" name="enddate" id="enddate" placeholder="รหัสผ่าน">
+				    <input type="text" class="form-control date" name="enddate" id="enddate" placeholder="">
 				  </div>
 
 

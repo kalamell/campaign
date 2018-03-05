@@ -106,7 +106,7 @@
 				'campaign_id': $("#campaign_id").val(),
 				'boot_name': $("#boot_name").val(),
 				'access': $("#access").val(),
-				'type_boot': $("#type_boot").val(),
+				'type_boot': $("#type_boot:checked").val(),
 			 }, function(res) {
 				
 				top.location.reload();
@@ -120,7 +120,7 @@
 				'boot_id': $("#boot_id").val(),
 				'boot_name': $("#boot_name").val(),
 				'access': $("#access").val(),
-				'type_boot': $("#type_boot").val(),
+				'type_boot': $("#type_boot:checked").val(),
 			 }, function(res) {
 				
 				top.location.reload();

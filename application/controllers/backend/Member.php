@@ -49,7 +49,7 @@ class Member extends Backend {
 	public function save()
 	{
 		$ar = array(
-			'username' => $this->input->post('usernam'),
+			'username' => $this->input->post('username'),
 			'email' => $this->input->post('email'),
 			'mobile' => $this->input->post('mobile'),
 			'name' => $this->input->post('name'),

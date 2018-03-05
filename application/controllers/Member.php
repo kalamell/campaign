@@ -475,7 +475,7 @@ class Member extends Front {
 		$this->campaign_id = $campaign_id;
 		$this->r = $this->db->where(array(
 			'campaign_id' => $campaign_id,
-			'boot_id' => $id
+			'boot_id' => $boot_id
 		))->get('boots')->row();
 		$this->load->view('campaign/boots/edit', $this);
 	}
