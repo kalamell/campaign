@@ -47,4 +47,10 @@ class Campaign_model extends CI_Model {
 
 
 	}
+
+
+	public function getBoot($campaign_id)
+	{
+		return $this->db->where('campaign_id', $campaign_id)->get('boots')->result();
+	}
 }

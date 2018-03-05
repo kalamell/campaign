@@ -100,6 +100,34 @@
 		});
 
 
+		$(document).on('click', '#save_boot', function() {
+				
+			$.post('<?php echo site_url('member/save_boot');?>', { 
+				'campaign_id': $("#campaign_id").val(),
+				'boot_name': $("#boot_name").val(),
+				'access': $("#access").val(),
+				'type_boot': $("#type_boot").val(),
+			 }, function(res) {
+				
+				top.location.reload();
+			})
+		});
+
+		$(document).on('click', '#save_edit_boot', function() {
+				
+			$.post('<?php echo site_url('member/update_boot');?>', { 
+				'campaign_id': $("#campaign_id").val(),
+				'boot_id': $("#boot_id").val(),
+				'boot_name': $("#boot_name").val(),
+				'access': $("#access").val(),
+				'type_boot': $("#type_boot").val(),
+			 }, function(res) {
+				
+				top.location.reload();
+			})
+		});
+
+
 
 
 

@@ -455,6 +455,57 @@ class Member extends Front {
 		
 	}
 
+
+	public function imp_boot($campaign_id)
+	{
+		
+		$this->rs = $this->cp->getBoot($campaign_id);
+		$this->f = $this->cp->getData($campaign_id);
+		$this->render('campaign/boots', $this);
+	}
+
+	public function add_boot($campaign_id)
+	{
+		$this->campaign_id = $campaign_id;
+		$this->load->view('campaign/boots/add', $this);
+	}
+
+	public function edit_boot($campaign_id, $boot_id)
+	{
+		$this->campaign_id = $campaign_id;
+		$this->r = $this->db->where(array(
+			'campaign_id' => $campaign_id,
+			'boot_id' => $id
+		))->get('boots')->row();
+		$this->load->view('campaign/boots/edit', $this);
+	}
+
+
+
+	public function save_boot()
+	{
+		$this->db->insert('boots', array(
+			'campaign_id' => $this->input->post('campaign_id'),
+			'boot_name' => $this->input->post('boot_name'),
+			'access' => $this->input->post('access'),
+			'type_boot' => $this->input->post('type_boot'),
+		));
+	}
+
+	public function update_boot()
+	{
+		$this->db->where(array(
+				'campaign_id' => $this->input->post('campaign_id'),
+				'boot_id' => $this->input->post('boot_id'),
+			))->update('boots', array(
+			
+			'boot_name' => $this->input->post('boot_name'),
+			'access' => $this->input->post('access'),
+			'type_boot' => $this->input->post('type_boot'),
+		));
+	}
+
+
 	public function prize_group($campaign_id, $prize_id)
 	{
 		$this->campaign_id = $campaign_id;

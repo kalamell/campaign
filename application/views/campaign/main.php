@@ -52,6 +52,7 @@
 										    	<li><a href="<?php echo site_url('member/imp_prize/'.$r->campaign_id);?>">นำเข้าของรางวัล</a></li>
 										    <?php endif;?>
 										    <li><a href="<?php echo site_url('member/imp_member/'.$r->campaign_id);?>">นำเข้ารายชื่อ</a></li>
+										    <li><a href="<?php echo site_url('member/imp_boot/'.$r->campaign_id);?>">บู๊ท</a></li>
 										  </ul>
 			  								
 			  							</div>
