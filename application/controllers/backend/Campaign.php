@@ -38,6 +38,7 @@ class Campaign extends Backend {
 			'on_date' => $this->input->post('on_date'),
 			'end_date' => $this->input->post('end_date'),
 			'lucky_draw' => $this->input->post('lucky_draw'),
+			'register' => $this->input->post('register'),
 		);
 		$this->cp->update($ar, $this->input->post('campaign_id'));
 
@@ -54,6 +55,7 @@ class Campaign extends Backend {
 			'on_date' => $this->input->post('on_date'),
 			'end_date' => $this->input->post('end_date'),
 			'lucky_draw' => $this->input->post('lucky_draw'),
+			'register' => $this->input->post('register'),
 		);
 		$this->cp->save($ar);
 		redirect('backend/campaign');

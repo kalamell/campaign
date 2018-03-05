@@ -51,6 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 
 $route['event/checkuser'] = 'event/checkuser';
+$route['event/checkregister'] = 'event/checkregister';
+$route['event/confirm'] = 'event/confirm';
+$route['event/savedata'] = 'event/savedata';
 
 $route['event/(:any)/confirm_data/(:any)'] = 'event/confirm_data/$1/$2';
 $route['event/(:any)/register'] = 'event/register/$1';

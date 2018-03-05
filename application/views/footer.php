@@ -68,6 +68,8 @@
 				'position': $("#position").val(),
 				'checkin': $("#checkin:checked").val(),
 				'no_prize': $("#no_prize:checked").val(),
+				'shop_name': $("#shop_name").val(),
+				'note': $("#note").val(),
 			 }, function(res) {
 				
 				top.location.reload();
@@ -89,6 +91,8 @@
 				'position': $("#position").val(),
 				'checkin': $("#checkin:checked").val(),
 				'no_prize': $("#no_prize:checked").val(),
+				'shop_name': $("#shop_name").val(),
+				'note': $("#note").val(),
 			 }, function(res) {
 				
 				top.location.reload();

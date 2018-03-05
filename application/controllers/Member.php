@@ -148,63 +148,110 @@ class Member extends Front {
 			
 			$handle = fopen("./upload/".$data['file_name'], "r");
 			$k = 0;
-			while (($data = fgets($handle)) !== FALSE) {
-			    if ($k > 0) {
-			    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
-			    	list($no, $staff_code, $code, $name, $surname, $register, $coupon, $table, $comp_code, $zone, $no_prize) = explode("\t", $data);
+			if ($this->input->post('file_type') == '1') {
+				while (($data = fgets($handle)) !== FALSE) {
+				    if ($k > 0) {
+				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
+				    	list($no, $staff_code, $code, $name, $surname, $register, $coupon, $table, $comp_code, $zone, $no_prize) = explode("\t", $data);
 
-			    	
-			    	if ($no_prize == 'NO') {
-			    		$no_prize = '2';
-			    	}
-
-
-			    	if (trim($code) == 'XXXX') {
-			    		$code = 'X'.sprintf('%04d', $no);
-			    		$no_prize = '2';
-			    	} else {
-			    		$no_prize = '1';
-			    	}
+				    	
+				    	if ($no_prize == 'NO') {
+				    		$no_prize = '2';
+				    	}
 
 
-			    
+				    	if (trim($code) == 'XXXX') {
+				    		$code = 'X'.sprintf('%04d', $no);
+				    		$no_prize = '2';
+				    	} else {
+				    		$no_prize = '1';
+				    	}
 
-			    	$dep_id = $this->md->dep($comp_code, $this->input->post('campaign_id'));
 
-			    	$chk = $this->db->where('staff_id', $code)->get('staff');
-			    	if ($chk->num_rows() ==0) {
-			    		
-						$this->db->insert('staff', array(
-							'staff_id' => $code,
-							'staff_code' => $staff_code,
-							'name' => $name.' '.$surname,
-							'position' => $table,
-							'dep_id' => $dep_id,
-							'mobile' => '-',
-							'email' => '-',
-							'no_prize' => $no_prize,
-							'campaign_id' => $this->input->post('campaign_id'),
-							'lotto_no' => $coupon,
-						));
+				    
 
-						//echo $this->db->last_query();
-					} else {
+				    	$dep_id = $this->md->dep($comp_code, $this->input->post('campaign_id'));
+
+				    	$chk = $this->db->where('staff_id', $code)->get('staff');
+				    	if ($chk->num_rows() ==0) {
+				    		
+							$this->db->insert('staff', array(
+								'staff_id' => $code,
+								'staff_code' => $staff_code,
+								'name' => $name.' '.$surname,
+								'position' => $table,
+								'dep_id' => $dep_id,
+								'mobile' => '-',
+								'email' => '-',
+								'no_prize' => $no_prize,
+								'campaign_id' => $this->input->post('campaign_id'),
+								'lotto_no' => $coupon,
+							));
+
+							//echo $this->db->last_query();
+						} else {
+							
+							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
+								'staff_code' => $staff_code,
+								'name' => $name.' '.$surname,
+								'position' => $table,
+								'dep_id' => $dep_id,
+								'mobile' => '-',
+								'email' => '-',
+								'no_prize' => $no_prize,
+								'campaign_id' => $this->input->post('campaign_id'),
+								'lotto_no' => $coupon,
+							));
+						}
 						
-						$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
-							'staff_code' => $staff_code,
-							'name' => $name.' '.$surname,
-							'position' => $table,
-							'dep_id' => $dep_id,
-							'mobile' => '-',
-							'email' => '-',
-							'no_prize' => $no_prize,
-							'campaign_id' => $this->input->post('campaign_id'),
-							'lotto_no' => $coupon,
-						));
-					}
-					
-			    }
-			    $k++;
+				    }
+				    $k++;
+				}
+			} else {
+				while (($data = fgets($handle)) !== FALSE) {
+				    if ($k > 0) {
+				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
+				    	list($staff_code, $name, $shop_name, $tel, $address, $note) = explode("\t", $data);
+
+
+				    	
+				    	$code = 'U'.sprintf('%04d', $k);
+
+				    	$chk = $this->db->where('staff_id', $code)->get('staff');
+				    	if ($chk->num_rows() ==0) {
+				    		
+							$this->db->insert('staff', array(
+								'staff_id' => $code,
+								'staff_code' => $staff_code,
+								'name' => $name,
+								'shop_name' => $shop_name,
+								'mobile' => $tel,
+								'no_prize' => 0,
+								'campaign_id' => $this->input->post('campaign_id'),
+								'lotto_no' => 0,
+								'address' => $address,
+								'note' => $note
+							));
+
+							//echo $this->db->last_query();
+						} else {
+							
+							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
+								'staff_code' => $staff_code,
+								'name' => $name,
+								'shop_name' => $shop_name,
+								'mobile' => $tel,
+								'no_prize' => 0,
+								'campaign_id' => $this->input->post('campaign_id'),
+								'lotto_no' => 0,
+								'address' => $address,
+								'note' => $note
+							));
+						}
+						
+				    }
+				    $k++;
+				}
 			}
 			fclose($handle);
 
@@ -355,7 +402,9 @@ class Member extends Front {
 				'mobile' => $this->input->post('mobile'),
 				'email' => $this->input->post('email'),
 				'campaign_id' => $this->input->post('campaign_id'),
-				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2'
+				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+				'shop_name' => $this->input->post('shop_name'),
+				'note' => $this->input->post('note'),
 			));
 		} else {
 			if ($this->input->post('checkin') == 1) {
@@ -369,7 +418,9 @@ class Member extends Front {
 				'mobile' => $this->input->post('mobile'),
 				'email' => $this->input->post('email'),
 				'campaign_id' => $this->input->post('campaign_id'),
-				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2'
+				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+				'shop_name' => $this->input->post('shop_name'),
+				'note' => $this->input->post('note'),
 			));
 		}
 
@@ -396,8 +447,12 @@ class Member extends Front {
 			'mobile' => $this->input->post('mobile'),
 			'email' => $this->input->post('email'),
 			'campaign_id' => $this->input->post('campaign_id'),
-			'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2'
+			'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+			'shop_name' => $this->input->post('shop_name'),
+			'note' => $this->input->post('note'),
 		));
+
+		
 	}
 
 	public function prize_group($campaign_id, $prize_id)

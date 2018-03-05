@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Event extends Front {
+class Event extends CI_Controller {
 
 	public function index()
 	{
@@ -16,7 +16,18 @@ class Event extends Front {
 
 	public function register($campaign_id)
 	{
-		$this->load->view('register/main');
+		$rs = $this->db->where('campaign_id', $campaign_id)->get('campaign');
+		if ($rs->num_rows() == 0) redirect('');
+
+		$this->r = $rs->row();
+
+		if ($rs->row()->register == 0) {
+			$this->staff = $this->db->where('campaign_id', $campaign_id)->get('staff')->result();
+		
+			$this->load->view('campaign/register/index', $this);
+		} else {
+			$this->load->view('register/main', $this);
+		}
 	}
 
 	public function confirm_data($campaign_id, $staff_id)
@@ -41,11 +52,15 @@ class Event extends Front {
 		if ($this->form_validation->run()) {
 			$id = $this->getid();
 			$this->db->like('staff_id', $this->input->post('code'))->set('checkin', 'NOW()', false)->update('staff', array(
-				'staff_code' => $id,
+				//'staff_code' => $id,
+
 			));
 
+			$rs = $this->db->like('staff_id', $this->input->post('code'))->get('staff');
+
 			$ar = array(
-				'staff_code' => $id
+				'staff_code' => $id,
+				'data' => $rs->row_array()
 			);
 		}
 
@@ -129,5 +144,64 @@ class Event extends Front {
 		}
 		echo json_encode($ar);
 	}
+
+	public function checkregister()
+	{
+		$ar = array(
+			'result' => false,
+			'error_code' => '404',
+		);
+		$rs = $this->db->where(array(
+			'staff_id' => $this->input->post('staff_id'),
+			'campaign_id' => $this->input->post('campaign_id')
+		))->get('staff');
+		if ($rs->num_rows() > 0) {
+			if ($rs->row()->checkin != null) {
+				$ar = array(
+					'result' => false,
+					'error_code' => '503',
+					'data' => $rs->row_array(),
+				);
+			} else {
+				
+
+				$ar = array(
+					'result' => true,
+					'data' => $rs->row()
+				);
+			}
+		}
+
+		echo json_encode($ar);
+	}
+
+	public function savedata()
+	{
+		$note = '';
+		if ($this->input->post('staff_id')) {
+			$note = 'แทน รหัสร้าน '.$this->input->post('staff_id');
+		}
+		$code = $this->getid();
+		$this->db->insert('staff', array(
+			'staff_id' => date('dHis'),
+			'staff_code' => $code,
+			'name' => $this->input->post('name').' '.$this->input->post('lastname'),
+			'checkin' => date('Y-m-d H:i:s'),
+			'note' => $note.$this->input->post('note'),
+			'email' => $this->input->post('email'),
+			'mobile' => $this->input->post('mobile'),
+			'campaign_id' => $this->input->post('campaign_id'),
+		));
+	}
+	/*
+	public function confirm()
+	{
+		$this->db->set('checkin', 'NOW()', false)
+		->where(array(
+			'staff_id' => $this->input->post('staff_id'),
+			'campaign_id' => $this->input->post('campaign_id')
+		))->update('staff');
+		echo json_encode(array('result' => true));
+	}*/
 
 }

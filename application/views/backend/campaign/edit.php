@@ -91,6 +91,22 @@
 
 				  </div>
 
+				  <div class="form-group col-md-6">
+				  	<label>รูปแบบหน้าลงทะเบียน</label>
+				  	
+				  	<div class="radio">
+				  		<label>
+				  			<input type="radio" class="required" name="register" <?php echo $r->register == '0' ? 'checked' : '';?> value="0"> ค้นหาชื่อ
+				  		</label>
+				  	</div>
+
+				  	<div class="radio">
+				  		<label>
+				  			<input type="radio" class="required"  name="register" <?php echo $r->register == '1' ? 'checked' : '';?> value="1"> QR CODE
+				  		</label>
+				  	</div>
+
+
 				  
 				  
 				  <div class='col-md-12'>

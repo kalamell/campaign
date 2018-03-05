@@ -94,6 +94,28 @@
 
 				  </div>
 
+
+				   <div class="form-group col-md-6">
+				  	<label>รูปแบบหน้าลงทะเบียน</label>
+				  	
+				  	<div class="radio">
+				  		<label>
+				  			<input type="radio" class="required" name="register" value="0"> ค้นหาชื่อ
+				  		</label>
+				  	</div>
+
+				  	<div class="radio">
+				  		<label>
+				  			<input type="radio" class="required"  name="register" value="1"> QR CODE
+				  		</label>
+				  	</div>
+
+
+
+				  </div>
+
+
+
 				  
 				  
 				  <div class='col-md-12'>

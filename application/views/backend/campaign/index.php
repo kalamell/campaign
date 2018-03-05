@@ -37,6 +37,7 @@
 			  				<th width="120" >Lucky Draw</th>
 			  				<th>เจ้าของ</th>
 			  				<th>วันเริ่ม - จบ แคมเปญ</th>
+				  				<th>ลงทะเบียน</th>
 			  			</tr>
 			  		</thead>
 			  		<tbody>
@@ -75,6 +76,11 @@
 			  						<td><?php echo $r->name.'<br>'.$r->mobile;?></td>
 
 			  						<td><?php echo $r->on_date.' ถึง '.$r->end_date;?></td>
+			  						<td style="text-align: center;">
+			  							<a target="_blank" href="<?php echo site_url('event/'.$r->campaign_id.'/register');?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>
+			  						</td>
+
+			  						
 
 			  						
 			  						

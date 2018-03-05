@@ -23,7 +23,22 @@
 			  	<input type="hidden" name="campaign_id" value="<?php echo $f->campaign_id;?>">
 
 			  	<div class="form-group">
-			  		<input type="file" class="form-control" name="file"> <button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button> <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">ล้างข้อมูล</a>
+			  		<div class='radio'>
+			  			<label>
+			  				<input type="radio" name="file_type" value="1" checked> อัพโหลดสมาชิก
+			  			</label>
+			  		</div>
+
+			  		<div class='radio'>
+			  			<label>
+			  				<input type="radio" name="file_type" value="2"> อัพโหลดร้าน
+			  			</label>
+			  		</div>
+			  	</div>
+
+			  	<div class="form-group">
+			  		<input type="file" class="form-control" name="file"> 
+			  		<button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button> <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">ล้างข้อมูล</a>
 			  		
 			  	</div>
 
@@ -89,7 +104,8 @@
 			  						<td><?php echo $r->staff_id;?></td>
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
-			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> <br> Email : <?php echo $r->email;?></td>
+			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> <br> Email : <?php echo $r->email;?><br>SHOP ID: <?php echo $r->staff_code;?><br>ชื่อร้าน : <?php echo $r->shop_name;?><br>Note: <?php echo $r->note;?>
+			  						</td>
 			  						<td style="text-align: center;"><?php echo $r->checkin == null ? '<a href="'.site_url('member/checkin/'.$r->campaign_id.'/'.$r->id).'" class="btn btn-sm btn-default">เข้างาน</a>' : '<label class="label label-success">'.$r->checkin.'</label>';?></td>
 
 			  						<td>
