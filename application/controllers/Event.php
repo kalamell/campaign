@@ -37,8 +37,10 @@ class Event extends CI_Controller {
 	}
 
 
-	public function confirm($campaign_id)
+	public function confirm($campaign_id = '')
 	{
+
+		$campaign_id = $campaign_id == '' ? $this->input->post('campaign_id') : $campaign_id;
 		
 		$config = array(
 			array(
