@@ -5,7 +5,7 @@ class Event extends CI_Controller {
 
 	public function index()
 	{
-		redirect('');
+		//redirect('');
 	}
 
 	public function id($campaign_id)

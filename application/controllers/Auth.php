@@ -39,7 +39,7 @@ class Auth extends CI_Controller {
 			if (!$rs) {
 				redirect('auth');
 			} else {
-				redirect('');
+				redirect('member');
 			}
 		} else {
 			redirect('auth');

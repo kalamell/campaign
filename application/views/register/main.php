@@ -130,7 +130,8 @@
 					}
 					*/
 
-					top.location.href='<?php echo site_url('event/'.$this->uri->segment(2) ? $this->uri->segment(2) : $campaign_id.'/confirm_data');?>/' + res.data.staff_id;
+					<?php  $url = $this->uri->segment(2) ? $this->uri->segment(2) : $campaign_id;?>
+					top.location.href='<?php echo site_url('event/'.$url.'/confirm_data');?>/' + res.data.staff_id;
 				}
 			}, 'json');
 

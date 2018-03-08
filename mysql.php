@@ -79,3 +79,7 @@ function groups($name) {
 	
 	return mysql_insert_id();
 }
+
+function sendsms($mobile, $name, $prize) {
+	
+}

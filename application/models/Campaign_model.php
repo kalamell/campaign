@@ -33,7 +33,13 @@ class Campaign_model extends CI_Model {
 
 	public function getPrize($campaign_id)
 	{
-		return $this->db->select('*,prize.name, prize.id as prize_id, prize.campaign_id')->where('prize.campaign_id', $campaign_id)->join('staff', 'prize.staff_id = staff.staff_id', 'LEFT')->order_by('prize.order', 'ASC')->order_by('prize.id')->get('prize')->result();
+		$rs = $this->db->select('*,prize.name, prize.id as prize_id, prize.campaign_id')->where('prize.campaign_id', $campaign_id)->join('staff', 'prize.staff_id = staff.staff_id', 'LEFT')->order_by('prize.order', 'ASC')->order_by('prize.id')->group_by('prize.id')->get('prize')->result();
+
+		
+
+		return $rs;
+
+
 	}
 
 	public function getStaff($campaign_id, $limit = '', $per_page = 0)
