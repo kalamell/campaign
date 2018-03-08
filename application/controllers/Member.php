@@ -134,21 +134,23 @@ class Member extends Front {
 				while (($data = fgets($handle)) !== FALSE) {
 				    if ($k > 0) {
 				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
-				    	list($no, $staff_code, $code, $name, $surname, $register, $coupon, $table, $comp_code, $zone, $no_prize) = explode("\t", $data);
+				    	list($no, $staff_code, $code, $name,  $comp_code, $position, $group, $job, $entrance, $lucky, $status, $no_prize) = explode("\t", $data);
 
 				    	
-				    	if ($no_prize == 'NO') {
+				    	if ($no_prize == 'no') {
 				    		$no_prize = '2';
 				    	}
 
+				    	if (trim($entrance) == 'เข้าร่วมงาน' && trim($lucky) == 'จับรางวัล') {
+				    		$no_prize = '0';
+				    	}
 
-				    	if (trim($code) == 'XXXX') {
-				    		$code = 'X'.sprintf('%04d', $no);
-				    		$no_prize = '2';
-				    	} else {
+				    	if (trim($entrance) == '' && trim($lucky) == 'จับรางวัล') {
 				    		$no_prize = '1';
 				    	}
 
+
+				    	
 
 				    
 
@@ -160,14 +162,15 @@ class Member extends Front {
 							$this->db->insert('staff', array(
 								'staff_id' => $code,
 								'staff_code' => $staff_code,
-								'name' => $name.' '.$surname,
-								'position' => $table,
+								'name' => $name,
+								'position' => $position,
 								'dep_id' => $dep_id,
 								'mobile' => '-',
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'lotto_no' => $coupon,
+								'status' => $status,
+								
 							));
 
 							//echo $this->db->last_query();
@@ -175,14 +178,14 @@ class Member extends Front {
 							
 							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
 								'staff_code' => $staff_code,
-								'name' => $name.' '.$surname,
-								'position' => $table,
+								'name' => $name,
+								'position' => $position,
 								'dep_id' => $dep_id,
 								'mobile' => '-',
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'lotto_no' => $coupon,
+								'status' => $status,
 							));
 						}
 						
@@ -369,6 +372,16 @@ class Member extends Front {
 	public function save_member()
 	{
 		$dep_id = $this->md->dep($this->input->post('dep_name'), $this->input->post('campaign_id'));
+		$status = '';
+
+		if ($this->input->post('no_prize') == '0') {
+			$status = 'เข้าร่วมงานและจับรางวัล';
+
+		} else if ($this->input->post('no_prize') == '1') {
+			$status = 'จับรางวัล';
+		} else {
+			$status = 'เข้าร่วมงาน';
+		}
 
     	$chk = $this->db->where('staff_id', $this->input->post('staff_id'))->get('staff');
     	if ($chk->num_rows() ==0) {
@@ -384,9 +397,10 @@ class Member extends Front {
 				'mobile' => $this->input->post('mobile'),
 				'email' => $this->input->post('email'),
 				'campaign_id' => $this->input->post('campaign_id'),
-				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+				'no_prize' => $this->input->post('no_prize'),
 				'shop_name' => $this->input->post('shop_name'),
 				'note' => $this->input->post('note'),
+				'status' => $status,
 			));
 		} else {
 			if ($this->input->post('checkin') == 1) {
@@ -400,9 +414,10 @@ class Member extends Front {
 				'mobile' => $this->input->post('mobile'),
 				'email' => $this->input->post('email'),
 				'campaign_id' => $this->input->post('campaign_id'),
-				'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+				'no_prize' => $this->input->post('no_prize'),
 				'shop_name' => $this->input->post('shop_name'),
 				'note' => $this->input->post('note'),
+				'status' => $status,
 			));
 		}
 
@@ -420,6 +435,17 @@ class Member extends Front {
 		} else {
 			$this->db->set('checkin', null);
 		}
+
+		$status = '';
+
+		if ($this->input->post('no_prize') == '0') {
+			$status = 'เข้าร่วมงานและจับรางวัล';
+		} else if ($this->input->post('no_prize') == '1') {
+			$status = 'จับรางวัล';
+		} else {
+			$status = 'เข้าร่วมงาน';
+		}
+
 		$this->db->where('id', $this->input->post('id'))->update('staff', array(
 			'staff_id' => $this->input->post('staff_id'),
 			'staff_code' => $this->input->post('staff_code'),
@@ -432,6 +458,7 @@ class Member extends Front {
 			'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
 			'shop_name' => $this->input->post('shop_name'),
 			'note' => $this->input->post('note'),
+			'status' => $status,
 		));
 
 		

@@ -38,6 +38,15 @@
 					<h3 class='name'>คุณ<?php echo $r->name;?></h3>
 				</div>
 
+				<?php $boots = get_access($r->staff_id, 'major01');?>
+				
+				<div class="col-xs-12" style="margin-top: 5px;">
+					<?php foreach($boots as $b):?>
+						<p style="color: #fff !important; <?php echo $b['can_access'] == 0 ? 'text-decoration: line-through;' : '';?>"><?php echo $b['can_access'];?> สิทธิ์ กิจกรรม<?php echo $b['boot_name'];?></p>
+					<?php endforeach;?>
+
+				</div>
+
 				
 
 				
@@ -70,6 +79,10 @@
 		function htmlEncode (value){
   return $('<div/>').text(value).html();
 }
+
+setInterval(function() {
+	top.location.realod();
+}, 1800000);
 
 	$(function() {
 		var url = '<?php echo site_url('event/'.$r->campaign_id.'/qr/'.$r->staff_code);?>';

@@ -16,8 +16,8 @@
 
 
       <div class="form-group col-md-12">
-        <label for="label">รหัสของรางวัล</label>
-        <input type="text" class="form-control required" value=""  id="label" name="label" maxlength="50" minlength="1" placeholder="รหัสของรางวัล">
+        <label for="label">Label</label>
+        <input type="text" class="form-control required" value=""  id="label" name="label" maxlength="50" minlength="1" placeholder="">
       </div>
 
 

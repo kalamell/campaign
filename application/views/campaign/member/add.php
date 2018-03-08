@@ -48,22 +48,37 @@
     </div>
 
     <div class="form-group col-md-6">
-    	<label>เข้างาน</label>
+    	<label>เข้างานเลย</label>
     	<div class="checkin">
     		<label>
-    			<input type="checkbox" name="checkin" value="1" id="checkin"> เข้างาน 
+    			<input type="checkbox" name="checkin" value="1" id="checkin"> เข้างานเลย 
     		</label>
     	</div>
     </div>
 
     <div class="form-group col-md-6">
-      <label>มีสิทธิ์รับรางวัล</label>
-      <div class="no_prize">
+      <label>สถานะ</label>
+      <div class="radio">
         <label>
-          <input type="checkbox" name="no_prize" value="1" id="no_prize"> มีสิทธิ์รับรางวัล 
+          <input type="radio" name="no_prize" value="1" id="no_prize" checked="checked"> รับรางวัลไม่ต้องผ่านลงทะเบียน 
         </label>
       </div>
+
+      <div class="radio">
+        <label>
+          <input type="radio" name="no_prize" value="0" id="no_prize"> รับรางวัลและต้องลงทะเบียน 
+        </label>
+      </div>
+
+      <div class="radio">
+        <label>
+          <input type="radio" name="no_prize" value="2" id="no_prize"> ลงทะเบียนอย่างเดียว 
+        </label>
+      </div>
+
     </div>
+
+    
 
     <div class="form-group col-md-12">
       <label for="shop_name">ชื่อร้าน</label>

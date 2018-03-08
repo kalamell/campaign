@@ -4,11 +4,14 @@
 	$id 		= mysql_real_escape_string($_POST['id']);
 	$staff_id 	= mysql_real_escape_string($_POST['staff_id']);
 
-	$ex = explode('P', $staff_id);
+	//$ex = explode('P', $staff_id);
 
-	$staff_id = $ex[1];
+	//$staff_id = $ex[1];
 	
 	$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `staff`.`staff_id` = '$staff_id' LIMIT 1";
+
+
+	/*
 	
 	$result = mysql_query($query);
 
@@ -34,3 +37,10 @@
 					'msg' => 'data not found'
 				));	
 	}
+
+	*/
+
+	echo json_encode(array(
+					'update' => 'complete'
+				));
+

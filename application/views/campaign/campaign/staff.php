@@ -87,6 +87,7 @@
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
 			  				<th>ข้อมูล</th>
+			  				<th>สถานะ</th>
 			  				<th>วันที่เข้างาน</th>
 			  				<th>ของรางวัล</th>
 			  				<th>&nbsp;</th>
@@ -104,8 +105,9 @@
 			  						<td><?php echo $r->staff_id;?></td>
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
-			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> <br> Email : <?php echo $r->email;?><br>SHOP ID: <?php echo $r->staff_code;?><br>ชื่อร้าน : <?php echo $r->shop_name;?><br>Note: <?php echo $r->note;?>
+			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 
 			  						</td>
+			  						<td><?php echo $r->status;?></td>
 			  						<td style="text-align: center;"><?php echo $r->checkin == null ? '<a href="'.site_url('member/checkin/'.$r->campaign_id.'/'.$r->id).'" class="btn btn-sm btn-default">เข้างาน</a>' : '<label class="label label-success">'.$r->checkin.'</label>';?></td>
 
 			  						<td>

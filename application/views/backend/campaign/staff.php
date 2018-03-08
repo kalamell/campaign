@@ -64,7 +64,13 @@
 			  						<td><?php echo $r->name;?></td>
 			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> <br> Email : <?php echo $r->email;?></td>
 			  						<td><?php echo $r->checkin == null ? '-' : $r->checkin;?></td>
-			  						<td><?php echo $r->prize_id == null ? '-' : $r->prize_name;?></td>
+			  						<td>
+			  							<?php if ($r->no_prize == 2):?>
+			  								ไม่มีสิทธิ์รับรางวัล
+			  							<?php else:?>
+			  								<?php echo $r->prize_id == null ? '-' : $r->prize_name;?>
+			  							<?php endif;?>
+			  							</td>
 			  						
 			  						
 			  					</tr>

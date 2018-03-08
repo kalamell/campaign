@@ -53,12 +53,19 @@ class Event extends CI_Controller {
 		$this->form_validation->set_rules($config);
 		if ($this->form_validation->run()) {
 			$id = $this->getid();
+
 			$this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->set('checkin', 'NOW()', false)->update('staff', array(
 				//'staff_code' => $id,
 
 			));
 
 			$rs = $this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->get('staff');
+
+			if ($rs->row()->no_prize == '0') {
+				$this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->update('staff', array(
+					'no_prize' => '1',
+				));
+			}
 
 			$ar = array(
 				'staff_code' => $rs->row()->staff_id,
