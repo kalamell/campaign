@@ -105,7 +105,7 @@
 			$.post('<?php echo site_url('event/checkuser');?>', {
 				code: $("#code").val(),
 				mobile: $("#mobile").val(),
-				campaign_id: '<?php echo $this->uri->segment(2);?>',
+				campaign_id: '<?php echo $this->uri->segment(2) ? $this->uri->segment(2) : $campaign_id;?>',
 			}, function(res) {
 				
 
@@ -130,7 +130,7 @@
 					}
 					*/
 
-					top.location.href='<?php echo site_url('event/'.$this->uri->segment(2).'/confirm_data');?>/' + res.data.staff_id;
+					top.location.href='<?php echo site_url('event/'.$this->uri->segment(2) ? $this->uri->segment(2) : $campaign_id.'/confirm_data');?>/' + res.data.staff_id;
 				}
 			}, 'json');
 
