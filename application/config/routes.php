@@ -50,6 +50,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |		my-controller/my-method	-> my_controller/my_method
 */
 
+
+$route['default_controller'] = 'event/register/major01';
+
 $route['event/checkuser'] = 'event/checkuser';
 $route['event/checkregister'] = 'event/checkregister';
 $route['event/confirm'] = 'event/confirm';
@@ -64,6 +67,6 @@ $route['event/(:any)/qr/(:any)'] = 'event/qr/$1/$2';
 $route['event/(:any)'] = 'event/id/$1';
 
 $route['backend'] = 'backend/member';
-$route['default_controller'] = 'main';
+
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = FALSE;

@@ -69,8 +69,14 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 |
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
+
+nottcom_major
+Host:	localhost
+Username:	nottcom_major
+Password:	ruFBv0Yn
+
 */
-$active_group = 'default';
+$active_group = 'host';
 $query_builder = TRUE;
 
 $db['default'] = array(
@@ -98,9 +104,9 @@ $db['default'] = array(
 $db['host'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'poszeeco_camp',
-	'password' => '5TAg41li',
-	'database' => 'poszeeco_camp',
+	'username' => 'nottcom_major',
+	'password' => 'ruFBv0Yn',
+	'database' => 'nottcom_major',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,

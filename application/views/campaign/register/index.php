@@ -90,7 +90,7 @@
 				</div>
 				<div class="body">
 					<h4>&nbsp;</h4>
-					<form class="register-form" action="">
+					<form class="register-form" action="" method="post">
 						<input type="hidden" id="staff_id" name="staff_id" value="">
 						<input type="hidden" name="campaign_id" value="<?php echo $this->uri->segment(2);?>">
 						<div class="form-control cf">
@@ -344,7 +344,7 @@
 			});
 
 			$("form.register-form").on('submit', function(e) {
-				e.preventDefault();
+
 				$.post('<?php echo site_url('event/savedata');?>', $('form.register-form').serialize(), function() {
 					$('input[type=text], input[type=email]').val('');
 					$('.overlay').hide();
