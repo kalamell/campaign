@@ -116,8 +116,13 @@ if (mysql_num_rows($rs) > 0) {
 echo json_encode($ar);
 
 
+
+
 function get_my_boot($staff_id, $campaign_id) {
 	$sql = "SELECT * FROM boots WHERE campaign_id = '".$campaign_id."'";
+
+	
+
 	$rs = mysql_query($sql);
 	if (mysql_num_rows($rs) == 0) { 
 		return array();
@@ -126,7 +131,7 @@ function get_my_boot($staff_id, $campaign_id) {
 		while($f = mysql_fetch_assoc($rs)) {
 			$access = $f['access'];
 
- 			$sql = "SELECT COUNT(ba_id) as c FROM boots_access JOIN boots ON boots_access.boot_id = boots.boot_id WHERE boots.campaign_id = '".$campaign_id."' AND boots_access.boot_id = '".$f['boot_id']."'";
+ 			$sql = "SELECT COUNT(ba_id) as c FROM boots_access JOIN boots ON boots_access.boot_id = boots.boot_id WHERE boots.campaign_id = '".$campaign_id."' AND boots_access.boot_id = '".$f['boot_id']."' AND staff_id = '".$staff_id."'";
 
 			$total_access = 0;
 			$all_access = 0;
@@ -135,6 +140,7 @@ function get_my_boot($staff_id, $campaign_id) {
 				while($f_as = mysql_fetch_assoc($rs2)) {
 					$total_access = $f_as['c'];
 				}
+
 
 				if ($f['access'] == 0) {
 					$all_access = 99;
@@ -152,10 +158,10 @@ function get_my_boot($staff_id, $campaign_id) {
 			$ar[] = array(
 				'boot_id' => $f['boot_id'],
 				'boot_name' => $f['boot_name'],
-				'can_access' => $all_access
+				'can_access' => $all_access,
+				'accessed' => $all_access == 0 ? false : true,
 			);
 		}
-
 
 		return $ar;
 	}
