@@ -11,7 +11,7 @@
 	$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `staff`.`staff_id` = '$staff_id' LIMIT 1";
 
 
-	/*
+	
 	
 	$result = mysql_query($query);
 
@@ -38,9 +38,5 @@
 				));	
 	}
 
-	*/
-
-	echo json_encode(array(
-					'update' => 'complete'
-				));
+	
 

@@ -1,7 +1,9 @@
 <?php
 include('mysql.php');
 
-/*
+$force_group = isset($_GET['force_group']) ? mysql_real_escape_string($_GET['force_group']) : '';
+
+
 $query 	= "SELECT * FROM  `prize` WHERE staff_id IS NULL and campaign_id = 'major01' ORDER BY `order` ASC LIMIT 1";
 
 
@@ -83,20 +85,36 @@ if (mysql_num_rows($result) == 0) {
 		}
 	}
 }
-*/
+
+
+/*
+
+
 
 $rand = rand(0, 1);
 
-$users = array();
-for($i=1; $i<=20; $i++) {
-	$users[] = array(
-		'staff_id' => sprintf('%05d', $i),
-		'name' => 'นาย ทดสอบ นามสกุลที่'.$i,
-	);
+if ($force_group == '1') {
+	$rand = 1;
 }
 
 
+if ($force_group == 'group') {
+	$rand = 0;
+}
+
+
+
+
+
 if ($rand == 0) {
+	$users = array();
+	for($i=1; $i<=20; $i++) {
+		$users[] = array(
+			'staff_id' => sprintf('%05d', $i),
+			'name' => 'นาย ทดสอบ นามสกุลที่'.$i,
+		);
+	}
+
 
 	$data[] = array(
 		'id' => '1',
@@ -108,6 +126,7 @@ if ($rand == 0) {
 	//sendsms('0954027399', $message);
 
 } else {
+
 	$data[] = array(
 		'id' => '2',
 		'prize_name' => 'เที่ยวญี่ปุ่น 1 วัน 1 คืน',
@@ -120,11 +139,10 @@ if ($rand == 0) {
 	);
 
 	$message = 'คุณ ทดสอบ ได้รางวัลลำดับที่ 2 เที่ยวญี่ปุ่น 1 วัน 1 คืน';
-	//sendsms('0954027399', $message);
-
 	
 }
 
+*/
 
 echo json_encode($data);
 ?>
