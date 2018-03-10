@@ -110,7 +110,14 @@ class Member extends Front {
 
 	public function checkin($campaign_id, $staff_id)
 	{
-		$this->db->set('checkin', 'NOW()', false)->where('id', $staff_id)->update('staff');
+		$rs = $this->db->where('id', $staff_id)->get('staff');
+		$no_prize = 0;
+		if ($rs->num_rows() > 0) {
+			if ($rs->row()->status == 'เข้าร่วมงานและจับรางวัล') {
+				$no_prize = 1;
+			}
+			$this->db->set('checkin', 'NOW()', false)->set('no_prize', $no_prize)->where('id', $staff_id)->update('staff');
+		}
 		redirect('member/imp_member/'.$campaign_id);
 
 	}
@@ -347,6 +354,13 @@ class Member extends Front {
 	public function reset_member($campaign_id)
 	{
 		$this->db->where('campaign_id', $campaign_id)->delete('staff');
+		$this->db->where('campaign_id', $campaign_id)->delete('department');
+		$this->db->where('campaign_id', $campaign_id)->update('prize', array(
+			'staff_id' => null,
+			'staff_name' => null,
+			'staff_dep' => null
+		));
+
 		redirect('member/imp_member/'.$campaign_id);
 
 	}
@@ -429,22 +443,29 @@ class Member extends Front {
 	{
 		$dep_id = $this->md->dep($this->input->post('dep_name'), $this->input->post('campaign_id'));
 
-    	
-		if ($this->input->post('checkin') == 1) {
-			$this->db->set('checkin', 'NOW()', false);
-		} else {
-			$this->db->set('checkin', null);
-		}
-
+    	$no_prize = 0;
+		
 		$status = '';
 
 		if ($this->input->post('no_prize') == '0') {
 			$status = 'เข้าร่วมงานและจับรางวัล';
+			$no_prize = 0;
+
 		} else if ($this->input->post('no_prize') == '1') {
 			$status = 'จับรางวัล';
+			$no_prize = 1;
 		} else {
 			$status = 'เข้าร่วมงาน';
+			$no_prize = 2;
 		}
+
+		if ($this->input->post('checkin') == 1) {
+			$this->db->set('checkin', 'NOW()', false);
+			$no_prize = 1;
+		} else {
+			$this->db->set('checkin', null);
+		}
+
 
 		$this->db->where('id', $this->input->post('id'))->update('staff', array(
 			'staff_id' => $this->input->post('staff_id'),
@@ -455,7 +476,7 @@ class Member extends Front {
 			'mobile' => $this->input->post('mobile'),
 			'email' => $this->input->post('email'),
 			'campaign_id' => $this->input->post('campaign_id'),
-			'no_prize' => $this->input->post('no_prize') == '1' ? '1' : '2',
+			'no_prize' => $no_prize,
 			'shop_name' => $this->input->post('shop_name'),
 			'note' => $this->input->post('note'),
 			'status' => $status,
@@ -532,6 +553,24 @@ class Member extends Front {
 		$this->prize_id = $prize_id;
 		$this->r = $this->db->where('id', $prize_id)->get('prize')->row();
 		$this->load->view('campaign/campaign/prize_group', $this);
+	}
+
+	public function prize_group_sms($campaign_id, $prize_id)
+	{
+		$r = $this->db->where('id', $prize_id)->get('prize')->row();
+		$member = getMemberPrize($campaign_id, $prize_id);
+
+		print_r($member);
+
+		foreach($member as $m) {
+			$msg = 'คุณ '.$m->name.' ได้รางวัลลำดับที่ '.$r->order.' '.$r->label;
+			$mobile = $m->mobile;
+			$mobile = '0954027399';
+			sendsms($mobile, $msg);
+			sendsms('0852120255', $msg);
+			sendsms('0814582996', $msg);
+		}
+		redirect('member/imp_prize/'.$campaign_id);
 	}
 
 	public function random2() {
@@ -638,14 +677,12 @@ class Member extends Front {
 			$j = 1;
 			foreach($inp as $k => $v) {
 				$gg.=$v;
-				if (count($inp) > 1) {
-					if ($j < count($inp)) {
-						$gg.=',';
-					}
-					$j++;
-				}
+				$gg.=',';
 			}
 		}
+
+		$gg = substr($gg, 0, -1);
+
 		$this->db->insert('prize', array(
 			'campaign_id' => $this->input->post('campaign_id'),
 			'label' => $this->input->post('label'),
@@ -664,14 +701,14 @@ class Member extends Front {
 			$j = 1;
 			foreach($inp as $k => $v) {
 				$gg.=$v;
-				if (count($inp) > 1) {
-					if ($j < count($inp)) {
-						$gg.=',';
-					}
-					$j++;
-				}
+				$gg.=',';
 			}
 		}
+		//echo substr('a,b,c,d,e,', 0, -1);
+
+		$gg = substr($gg, 0, -1);
+
+		
 		$this->db->where('id', $this->input->post('prize_id'))->update('prize', array(
 			'campaign_id' => $this->input->post('campaign_id'),
 			'label' => $this->input->post('label'),
@@ -680,6 +717,8 @@ class Member extends Front {
 			'gg' => $gg,
 			'order' => $this->input->post('order'),
 		));
+
+		echo $this->db->last_query();
 	}
 
 

@@ -114,7 +114,11 @@
 			  							<?php if ($r->no_prize == '2'):?>
 			  								ไม่มีสิทธิ์รับรางวัล
 			  							<?php else:?>
-			  								<?php echo $r->prize_id == null ? '-' : $r->prize_name;?>
+			  								<?php if ($r->prize_date != null):?>
+			  									<?php echo $r->prize_name;?>
+			  								<?php else:?>
+			  									-
+			  								<?php endif;?>
 			  							<?php endif;?>
 			  								</td>
 			  						<td width="85">

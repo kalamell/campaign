@@ -25,6 +25,25 @@
 				echo json_encode(array(
 					'update' => 'complete'
 				));
+
+				$query 	= "SELECT * FROM  `prize` WHERE `id` = '$id' ORDER BY `order` ASC LIMIT 1";
+				$result = mysql_query($query);
+
+				$label = '';
+				$order_id = '';
+				while($row_prize = mysql_fetch_assoc($result)){
+					$label = $row_prize['label'];
+					$order_id = $row_prize['order'];
+				}
+
+
+
+				$msg = 'คุณ '.$row['name'].' ได้รางวัลลำดับที่ '.$order_id.' '.$label;
+				$mobile = $row['mobile'];
+				$mobile = '0954027399';
+				sendsms($mobile, $msg);
+				sendsms('0852120255', $msg);
+				sendsms('0814582996', $msg);
 			}else {
 				echo json_encode(array(
 					'update' => 'fail'

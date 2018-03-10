@@ -50,7 +50,7 @@
 			  				<th width="200">ชื่อของรางวัล</th>
 			  				<th width="100">จำนวน</th>
 			  				<th>พนักงานผู้ได้รับรางวัล</th>
-			  				<th width="100">&nbsp;</th>
+			  				<th width="200">&nbsp;</th>
 			  			</tr>
 			  		</thead>
 
@@ -93,7 +93,10 @@
 			  						</td>
 			  						<td>
 			  							<?php if ($r->total > 1):?>
+			  								<div class='btn-group'>
 			  								<a class="btn btn-sm btn-info" target="_blank" href="<?php echo site_url('member/prize_group/'.$r->campaign_id.'/'.$r->prize_id);?>">จับแบบกลุ่ม</a>
+			  								<a href="<?php echo site_url('member/prize_group_sms/'.$r->campaign_id.'/'.$r->prize_id);?>" class="btn btn-sm btn-default"><i class="fa fa-phone"></i>ส่ง SMS</a>
+			  							</div>
 			  							<?php else:?>
 			  								&nbsp;
 			  							<?php endif;?>

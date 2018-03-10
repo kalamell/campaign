@@ -19,6 +19,8 @@ while($row = mysql_fetch_assoc($result)){
 	$filter_sql = $row['gg']=='' ? '' : " AND `staff`.`dep_id` IN (". $row['gg'] .")"; 
 	
 	$prize_id = $row['id'];
+	$label = $row['label'];
+	$order_id = $row['order'];
 
 	$total = $row['total'];
 }
@@ -27,14 +29,23 @@ while($row = mysql_fetch_assoc($result)){
 $query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `checkin` IS NOT NULL AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
 
 
+$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
+
+
+
+
 $result = mysql_query($query);
 $data = array();
 if (mysql_num_rows($result) == 0) {
 	$data[] = array(
 		'id' => '0',
-		'total' => '0',
-		'staff_id' => 'P0000',
-		'name' => 'xxxx xxxxxx'
+		'prize_name' => 'xxxxx',
+		'users' => array(
+			array(
+				'staff_id' => '00000',
+				'name' => 'xxxx xxxx'
+			)
+		)
 	);
 } else {
 
@@ -42,8 +53,8 @@ if (mysql_num_rows($result) == 0) {
 		while($row = mysql_fetch_assoc($result)) {
 			$data[] = array(
 				'id' => $prize_id,
-				'total' => $total,
-				'member' => array(
+				'prize_name' => '',
+				'users' => array(
 					array(
 						'staff_id' =>  $row['staff_id'],
 						'name' => 'คุณ'.$row['name'],
@@ -62,6 +73,13 @@ if (mysql_num_rows($result) == 0) {
 			$no = 1;
 
 			while($row = mysql_fetch_assoc($result)) {
+
+				$message = 'คุณ '.$row['name'].' ได้รางวัลลำดับที่ '.$order_id.' '.$label;
+				$mobile = $row['mobile'];
+				$mobile = '0954027399';
+				//sendsms($mobile, $message);
+
+
 				$member[] = array(
 					'staff_id' =>  $row['staff_id'],
 					'name' => 'คุณ'.$row['name'],
@@ -79,8 +97,8 @@ if (mysql_num_rows($result) == 0) {
 
 			$data[] = array(
 				'id' => $prize_id,
-				'total' => $total,
-				'member' => $member
+				'prize_name' => $prize_name,
+				'users' => $member
 			);
 		}
 	}
@@ -89,6 +107,7 @@ if (mysql_num_rows($result) == 0) {
 
 /*
 
+$data = array();
 
 
 $rand = rand(0, 1);
@@ -140,9 +159,9 @@ if ($rand == 0) {
 
 	$message = 'คุณ ทดสอบ ได้รางวัลลำดับที่ 2 เที่ยวญี่ปุ่น 1 วัน 1 คืน';
 	
-}
+}*/
 
-*/
+
 
 echo json_encode($data);
 ?>

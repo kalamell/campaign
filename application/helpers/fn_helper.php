@@ -107,3 +107,30 @@ function get_access($staff_id, $campaign_id) {
 	}
 	return $ar;
 }
+
+
+function sendsms($mobile, $message) {
+	
+	$params['method']   = 'send';
+    $params['username'] = 'nottpeera';
+    $params['password'] = '03aeb8';
+
+    $params['from']     = 'SPECIAL';
+    $params['to']       = $mobile;
+    $params['message']  = $message;
+
+	$ch = curl_init();
+    curl_setopt($ch, CURLOPT_URL, 'http://www.thsms.com/api/rest');
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_POST, 1);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query( $params));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+
+    $response  = curl_exec($ch);
+    $lastError = curl_error($ch);
+    $lastReq = curl_getinfo($ch);
+    curl_close($ch);
+
+    return $response;
+}
+
