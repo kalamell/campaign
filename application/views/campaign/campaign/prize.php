@@ -27,6 +27,18 @@
 			  		<a href="<?php echo site_url('member/reset_prize/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">Reset การจับรางวัล</a>
 
 
+			  		<a href="<?php echo site_url('member/clear_prize/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-warning btn-sm">ล้างข้อมูล</a>
+
+			  		<a target="_blank" href="<?php echo site_url('event/scroll/'.$f->campaign_id);?>" class="btn btn-default btn-sm">แสดงผลการจับรางวัล</a>
+
+
+			  		<a target="_blank" href="<?php echo site_url('member/export_prize/'.$f->campaign_id);?>" class="btn btn-success btn-sm">Export Excel</a>
+
+			  		
+
+
+
+
 			  		
 			  		
 			  	</div>
@@ -45,6 +57,7 @@
 			  	<table class="table table-bordered table-striped">
 			  		<thead>
 			  			<tr>
+			  				<th>Dep(s)</th>
 			  				<th width="120">&nbsp;</th>
 			  				<th>ลำดับ</th>
 			  				<th width="200">ชื่อของรางวัล</th>
@@ -56,10 +69,13 @@
 
 			  		<tbody>
 			  			<?php if (count($rs) == 0):?>
-			  				<tr><td colspan="5" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  				<tr><td colspan="8" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
+			  						<td style="text-align: center;">
+			  							<?php echo getCountDepVote($r->prize_id);?>
+			  						</td>
 			  						<td style="text-align: center;">
 			  							<div class="btn-group">
 			  								<a data-toggle="modal" data-remote="false" data-target="#myModal" href="<?php echo site_url('member/edit_prize/'.$r->campaign_id.'/'.$r->prize_id);?>" class="btn btn-sm btn-default"><i class="fa fa-edit"></i></a>
@@ -78,24 +94,36 @@
 
 			  						<td><?php echo $r->name;?></td>
 			  						<td style=""><?php echo $r->total;?></td>
-			  						<td><?php if ($r->total > 1):?>
+			  						<td>
 			  							<?php 
 			  							$member = getMemberPrize($r->campaign_id, $r->prize_id);
 			  							if(count($member)>0) {
 			  								foreach($member as $m) {
-			  									echo '<p>'.$m->staff_id.' - '.$m->name.'</p>';
+			  									echo '<p>'.$m->staff_id.' - '.$m->name;
+			  									?>
+
+			  									<?php if ($m->sms_date != null):?>
+			  										<br><label class="label label-success">send @<?php echo $m->sms_date;?></label>
+			  									<?php endif;?>
+
+			  									<?php if ($m->mobile != '-'):?>
+
+			  									<a class='pull-right btn btn-sm btn-default' href="<?php echo site_url('member/sms/'.$r->campaign_id.'/'.$r->prize_id.'/'.$m->staff_id);?>">Send SMS</a>
+			  								<?php endif;?>
+			  									</p>
+
+			  									<?php
 			  								}
 			  							}
 			  							?>
-			  							<?php else:?>
-			  								<?php echo $r->staff_name;?>
-			  							<?php endif;?>
+			  							
+			  							
 			  						</td>
 			  						<td>
 			  							<?php if ($r->total > 1):?>
 			  								<div class='btn-group'>
 			  								<a class="btn btn-sm btn-info" target="_blank" href="<?php echo site_url('member/prize_group/'.$r->campaign_id.'/'.$r->prize_id);?>">จับแบบกลุ่ม</a>
-			  								<a href="<?php echo site_url('member/prize_group_sms/'.$r->campaign_id.'/'.$r->prize_id);?>" class="btn btn-sm btn-default"><i class="fa fa-phone"></i>ส่ง SMS</a>
+			  								
 			  							</div>
 			  							<?php else:?>
 			  								&nbsp;

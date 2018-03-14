@@ -54,6 +54,26 @@ class Member extends Front {
 		$this->render('campaign/prize', $this);
 	}
 
+	public function export_prize($campaign_id)
+	{
+		header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		header("Content-Disposition: attachment;filename='prize-".$campaign_id.".xls'");
+		header("Cache-Control: max-age=0");
+
+		$this->rs = $this->cp->getPrize($campaign_id);
+		$this->f = $this->cp->getData($campaign_id);
+		$this->load->view('campaign/boots/export', $this);
+	}
+
+	public function clear_prize($campaign_id)
+	{
+		$this->db->where('campaign_id', $campaign_id)->set('prize_id', null)->set('prize_date', null)->update('staff');
+		$this->db->where('campaign_id', $campaign_id)->delete('prize');
+		redirect('member/imp_prize/'.$campaign_id);
+
+	}
+
+
 	public function do_prize()
 	{
 		$config['upload_path']          = './upload/';
@@ -65,45 +85,44 @@ class Member extends Front {
         {
         	$data = $this->upload->data();
 
-        	/*
+        	$dep = $this->db->where('campaign_id', $this->input->post('campaign_id'))->get('department')->result();
 
-        	$src = base_url('upload/'.$data['file_name']);
-			$lines 	= file($src);
-			foreach($lines as $k => $line) {
-				// code, name, surname, position , mobile, branch , district, area,  group
-				if ($k > 0) {
-					list($order, $label, $name, $total) = explode(",", $line);
-					$this->db->insert('prize', array(
-						'order' => $order,
-						'label' => $label,
-						'name' => $name,
-						'total' => $total,
-						'campaign_id' => $this->input->post('campaign_id'),
-					));
-				}
+        	$gg = '';
+
+
+			foreach($dep as $d) {
+				$gg.=$d->dep_id;
+				$gg.=',';
 			}
-			*/
 
+			$gg = substr($gg, 0, -1);
+			
+
+        	
 
 			$handle = fopen("./upload/".$data['file_name'], "r");
 			$k = 0;
 			while (($data = fgets($handle)) !== FALSE) {
+				
 			    if ($k > 0) {
 			    	list($order, $label, $name, $total) = explode(",", $data);
+
 					$this->db->insert('prize', array(
 						'order' => $order,
 						'label' => $label,
 						'name' => $name,
 						'total' => $total,
 						'campaign_id' => $this->input->post('campaign_id'),
+						'gg' => $gg
 					));
 			    }
 			    $k++;
 			}
 			fclose($handle);
 
-
-        } 
+        } else {
+        	echo $this->upload->display_errors();
+        }
 
         redirect('member/imp_prize/'.$this->input->post('campaign_id'));
 	}
@@ -113,9 +132,11 @@ class Member extends Front {
 		$rs = $this->db->where('id', $staff_id)->get('staff');
 		$no_prize = 0;
 		if ($rs->num_rows() > 0) {
-			if ($rs->row()->status == 'เข้าร่วมงานและจับรางวัล') {
+
+			if ($rs->row()->no_prize == 0 || $rs->row()->no_prize == 1) {
 				$no_prize = 1;
 			}
+
 			$this->db->set('checkin', 'NOW()', false)->set('no_prize', $no_prize)->where('id', $staff_id)->update('staff');
 		}
 		redirect('member/imp_member/'.$campaign_id);
@@ -141,7 +162,7 @@ class Member extends Front {
 				while (($data = fgets($handle)) !== FALSE) {
 				    if ($k > 0) {
 				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
-				    	list($no, $staff_code, $code, $name,  $comp_code, $position, $group, $job, $entrance, $lucky, $status, $no_prize) = explode("\t", $data);
+				    	list($no, $staff_code, $code, $name,  $comp_code, $position, $group, $job, $entrance, $lucky, $status, $no_prize) = explode(",", $data);
 
 				    	
 				    	if ($no_prize == 'no') {
@@ -158,8 +179,7 @@ class Member extends Front {
 
 
 				    	
-
-				    
+				    	
 
 				    	$dep_id = $this->md->dep($comp_code, $this->input->post('campaign_id'));
 
@@ -180,7 +200,9 @@ class Member extends Front {
 								
 							));
 
-							//echo $this->db->last_query();
+							//echo $this->db->last_query()."<BR>";
+
+						
 						} else {
 							
 							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
@@ -193,8 +215,17 @@ class Member extends Front {
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
 								'status' => $status,
+								'addi' => 1
 							));
+
+						//	echo $this->db->last_query()."<BR>";
 						}
+
+						//echo '<BR><BR>';
+						
+						
+
+						
 						
 				    }
 				    $k++;
@@ -237,7 +268,8 @@ class Member extends Front {
 								'campaign_id' => $this->input->post('campaign_id'),
 								'lotto_no' => 0,
 								'address' => $address,
-								'note' => $note
+								'note' => $note,
+								'addi' => 1
 							));
 						}
 						
@@ -358,7 +390,8 @@ class Member extends Front {
 		$this->db->where('campaign_id', $campaign_id)->update('prize', array(
 			'staff_id' => null,
 			'staff_name' => null,
-			'staff_dep' => null
+			'staff_dep' => null,
+			'gg' => null,
 		));
 
 		redirect('member/imp_member/'.$campaign_id);
@@ -560,17 +593,47 @@ class Member extends Front {
 		$r = $this->db->where('id', $prize_id)->get('prize')->row();
 		$member = getMemberPrize($campaign_id, $prize_id);
 
-		print_r($member);
-
 		foreach($member as $m) {
-			$msg = 'คุณ '.$m->name.' ได้รางวัลลำดับที่ '.$r->order.' '.$r->label;
+			$ex = explode(' ', $m->name);
+			$msg = 'คุณ'.$ex[0].'ได้รางวัล'.$r->label;
 			$mobile = $m->mobile;
-			$mobile = '0954027399';
+			//$mobile = '0954027399';
+
+			$this->updatesms($m->staff_id);
+
 			sendsms($mobile, $msg);
-			sendsms('0852120255', $msg);
-			sendsms('0814582996', $msg);
+			//sendsms('0852120255', $msg);
+			//sendsms('0814582996', $msg);
 		}
 		redirect('member/imp_prize/'.$campaign_id);
+	}
+
+	public function sms($campaign_id, $prize_id, $staff_id)
+	{
+		$rs = $this->db->select('staff.name as staff_name, label, staff.mobile')->where('prize.id', $prize_id)
+			->where('staff.staff_id', $staff_id)
+			->where('staff.prize_date !=', NULL)
+			->join('staff', 'prize.id = staff.prize_id')
+			->get('prize')->row();
+
+			
+
+		$ex = explode(' ', $rs->staff_name);
+
+		
+		
+
+		$msg = 'คุณ'.$ex[0]. ' '.$staff_id.' ได้รับรางวัล'.$rs->label.' ติดต่อรับรางวัลที่บริษัทฯ';
+		sendsms($rs->mobile, $msg);
+
+		$this->updatesms($staff_id);
+
+		redirect('member/imp_prize/'.$campaign_id);
+	}
+
+	private function updatesms($staff_id)
+	{
+		$this->db->set('sms_date', 'NOW()', false)->where('staff_id', $staff_id)->update('staff');
 	}
 
 	public function random2() {
@@ -588,8 +651,6 @@ class Member extends Front {
 		$prize = $this->db->where('id', $this->input->post('prize_id'))->where('staff_id IS NULL', null, false)->get('prize');
 
 
-
-		
 		$gg = '';
 
 		if ($prize->num_rows() > 0) {
@@ -602,16 +663,20 @@ class Member extends Front {
 			}
 			$total = $prize->row()->total;
 
+			if ($prize->row()->checkin_active == 1) {
+				$thsi->db->where('checkin IS NOT NULL', null, false);
+			}
+
 			$member = $this->db->where('prize_id', null)
-				->where('checkin IS NOT NULL', null, false)
+				//->where('checkin IS NOT NULL', null, false)
 				->where('no_prize', 1)
 				->join('department', 'staff.dep_id = department.dep_id', 'LEFT')
 				->limit($total)
 				->order_by('id', 'RANDOM')
 				->get('staff');
 
+			//echo $this->db->last_query();
 
-			
 
 			if ($member->num_rows() > 0) {
 				foreach($member->result() as $m) {
@@ -690,7 +755,10 @@ class Member extends Front {
 			'total' => $this->input->post('total'),
 			'gg' => $gg,
 			'order' => $this->input->post('order'),
+			'checkin_active' => $this->input->post('checkin_active') == NULL ? 0 : 1,
 		));
+
+
 	}
 
 	public function update_add_prize()
@@ -716,6 +784,7 @@ class Member extends Front {
 			'total' => $this->input->post('total'),
 			'gg' => $gg,
 			'order' => $this->input->post('order'),
+			'checkin_active' => $this->input->post('checkin_active') == NULL ? 0 : 1,
 		));
 
 		echo $this->db->last_query();
@@ -766,5 +835,121 @@ class Member extends Front {
 			'campaign_id' => $this->input->post('campaign_id')
 		))->update('staff');
 		echo json_encode(array('result' => true));
+	}
+
+	public function vote($campaign_id)
+	{
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$vote_id = $this->input->post('vote_id');
+			$this->db->update('vote', array(
+				'active' => 0
+			));
+
+			foreach($vote_id as $id => $val) {
+				$this->db->where('vote_id', $id)->update('vote', array(
+					'active' => 1
+				));
+			}
+		}
+		$this->rs = $this->cp->getVote($campaign_id, 0);
+		$this->f = $this->cp->getData($campaign_id);
+		$this->render('campaign/vote', $this);
+	}
+
+	public function add_vote($campaign_id)
+	{
+		$this->campaign_id = $campaign_id;
+		$this->load->view('campaign/vote/add', $this);
+
+	}
+
+	public function edit_vote($campaign_id, $vote_id)
+	{
+		$this->campaign_id = $campaign_id;
+		$this->r = $this->db->where('vote_id', $vote_id)->get('vote')->row();
+		$this->load->view('campaign/vote/edit', $this);
+
+	}
+
+	public function save_vote()
+	{
+		$this->db->insert('vote', array(
+			'title' => $this->input->post('title'),
+			'type' => $this->input->post('type'),
+			'campaign_id' => $this->input->post('campaign_id'),
+			'mobile' => $this->input->post('mobile'),
+		));
+		$vote_id = $this->db->insert_id();
+
+		$config['upload_path']          = './upload/';
+        $config['allowed_types']        = '*';
+        $config['file_name']            = 'vote-'.$vote_id.'-'.$this->input->post("campaign_id");
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('thumbnail'))
+        {
+        	$data = $this->upload->data();
+        	$this->db->where('vote_id', $vote_id)->update('vote', array(
+        		'thumbnail' => $data['file_name'],
+        	));
+        	
+        } 
+        redirect('member/vote/'.$this->input->post('campaign_id'));
+	}
+
+	public function update_vote()
+	{
+		$this->db->where('vote_id', $this->input->post('vote_id'))->update('vote', array(
+			'title' => $this->input->post('title'),
+			'type' => $this->input->post('type'),
+			'campaign_id' => $this->input->post('campaign_id'),
+			'mobile' => $this->input->post('mobile'),
+		));
+		$vote_id = $this->input->post('vote_id');
+
+		$config['upload_path']          = './upload/';
+        $config['allowed_types']        = '*';
+        $config['file_name']            = 'vote-'.$vote_id.'-'.$this->input->post("campaign_id");
+        $this->load->library('upload', $config);
+
+        if ($this->upload->do_upload('thumbnail'))
+        {
+        	$data = $this->upload->data();
+        	$this->db->where('vote_id', $vote_id)->update('vote', array(
+        		'thumbnail' => $data['file_name'],
+        	));
+        	
+        } 
+        redirect('member/vote/'.$this->input->post('campaign_id'));
+	}
+
+	public function delete_vote($campaign_id, $vote_id)
+	{
+		$this->db->where('vote_id', $vote_id)->delete('vote');
+		$this->db->where('vote_id', $vote_id)->delete('vote_member');
+		redirect('member/vote/'.$campaign_id);
+
+	}
+
+	public function export_member($campaign_id)
+	{
+		header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+		header("Content-Disposition: attachment;filename='member-".$campaign_id.".xls'");
+		header("Cache-Control: max-age=0");
+
+		$this->rs = $this->cp->getStaff($campaign_id);
+
+		$this->boot = $this->cp->getBoot($campaign_id);
+
+		$this->load->view('campaign/member/export', $this);
+	}
+
+	public function vote_active($campaign_id, $act)
+	{
+		$this->db->where('campaign_id', $campaign_id)->update('campaign', array(
+			'vote_active' => $act
+		));
+
+		redirect('member/campaign');
 	}
 }

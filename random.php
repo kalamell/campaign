@@ -15,6 +15,9 @@ $prize_id = 0;
 $fix_staff = '';
 $filter_sql = '';
 $total = 1;
+$prize_name = '';
+$checkin_active = 0;
+
 while($row = mysql_fetch_assoc($result)){
 	$filter_sql = $row['gg']=='' ? '' : " AND `staff`.`dep_id` IN (". $row['gg'] .")"; 
 	
@@ -23,11 +26,18 @@ while($row = mysql_fetch_assoc($result)){
 	$order_id = $row['order'];
 
 	$total = $row['total'];
+	$prize_name = $row['name'];
+
+	$checkin_active = $row['checkin_active'];
+
+	if ($checkin_active == 1) {
+		$filter_sql.= ' AND staff.checkin IS NOT NULL ';
+	}
 }
 
-
+/*
 $query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `checkin` IS NOT NULL AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
-
+*/
 
 $query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
 
@@ -39,11 +49,11 @@ $data = array();
 if (mysql_num_rows($result) == 0) {
 	$data[] = array(
 		'id' => '0',
-		'prize_name' => 'xxxxx',
+		'prize_name' => '- - - - -',
 		'users' => array(
 			array(
 				'staff_id' => '00000',
-				'name' => 'xxxx xxxx'
+				'name' => 'รอสักครู่ กำลังรอรางวัล'
 			)
 		)
 	);
@@ -53,7 +63,7 @@ if (mysql_num_rows($result) == 0) {
 		while($row = mysql_fetch_assoc($result)) {
 			$data[] = array(
 				'id' => $prize_id,
-				'prize_name' => '',
+				'prize_name' => $prize_name,
 				'users' => array(
 					array(
 						'staff_id' =>  $row['staff_id'],
@@ -84,17 +94,14 @@ if (mysql_num_rows($result) == 0) {
 					'staff_id' =>  $row['staff_id'],
 					'name' => 'คุณ'.$row['name'],
 				);
-				mysql_query ("UPDATE `staff` SET `prize_id` = '".$prize_id."' WHERE `staff_id` = '".$row['staff_id']."' LIMIT 1");
+				mysql_query ("UPDATE `staff` SET `prize_id` = '".$prize_id."', `prize_date` = NOW() WHERE `staff_id` = '".$row['staff_id']."' LIMIT 1");
 
 				if ($no == 1) {
 					mysql_query ("UPDATE `prize` SET `staff_id` = '".$row['staff_id']."', `staff_name` = '". $row['name'] ."', `staff_dep` = '". $row['staff_dep'] ."' WHERE `id` = '".$prize_id."' LIMIT 1");
 			
 				}
 				$no++;
-
-
 			}
-
 			$data[] = array(
 				'id' => $prize_id,
 				'prize_name' => $prize_name,
@@ -103,8 +110,6 @@ if (mysql_num_rows($result) == 0) {
 		}
 	}
 }
-
-
 /*
 
 $data = array();

@@ -59,4 +59,13 @@ class Campaign_model extends CI_Model {
 	{
 		return $this->db->where('campaign_id', $campaign_id)->get('boots')->result();
 	}
+
+	public function getVote($campaign_id, $active = 1)
+	{
+		if ($active == 1) {
+			$this->db->where('active', 1);
+		}
+
+		return $this->db->select('*,(SELECT COUNT(vote_id) FROM vote_member WHERE vote_member.vote_id = vote.vote_id) as c')->where('campaign_id', $campaign_id)->order_by('c', 'DESC')->get('vote')->result();
+	}
 }

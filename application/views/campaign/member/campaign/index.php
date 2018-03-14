@@ -30,6 +30,7 @@
 			  				<th>เข้างาน</th>
 			  				<th>ยังไม่เข้างาน</th>
 			  				<th>Lucky Draw</th>
+			  				<th>ระบบโหวต</th>
 			  				<th>ลงทะเบียน</th>
 			  			</tr>
 			  		</thead>
@@ -52,6 +53,12 @@
 										    	<li><a href="<?php echo site_url('member/imp_prize/'.$r->campaign_id);?>">นำเข้าของรางวัล</a></li>
 										    <?php endif;?>
 										    <li><a href="<?php echo site_url('member/imp_member/'.$r->campaign_id);?>">นำเข้ารายชื่อ</a></li>
+
+										    <li><a href="<?php echo site_url('member/vote/'.$r->campaign_id);?>">ระบบ Vote</a></li>
+
+										    <li><a href="<?php echo site_url('member/imp_boot/'.$r->campaign_id);?>">บู๊ท</a></li>
+
+
 										  </ul>
 			  								
 			  							</div>
@@ -63,6 +70,16 @@
 			  						<td style="text-align: center;">
 			  							<span class="label label-<?php echo $r->lucky_draw == '0'? 'default' : 'success';?>"><?php echo $r->lucky_draw == '0' ? 'ไม่มีจับรางวัล' : 'Y';?></span>
 			  						</td>
+
+			  						<td style="width: 100px;">
+			  							<?php if ($r->vote_active == 0):?>
+			  								<a href="<?php echo site_url('member/vote_active/'.$r->campaign_id.'/1');?>" class='btn btn-sm btn-info'>ปิด</a>
+			  							<?php else:?>
+			  								<a href="<?php echo site_url('member/vote_active/'.$r->campaign_id.'/0');?>" class="btn btn-sm btn-default">เปิด</a>
+			  							<?php endif;?>
+			  						</td>
+
+
 
 			  						<td style="text-align: center;">
 			  							<a target="_blank" href="<?php echo site_url('event/'.$r->campaign_id.'/register');?>" class="btn btn-sm btn-default">ลงทะเบียนเข้างาน</a>

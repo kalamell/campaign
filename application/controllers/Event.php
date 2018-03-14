@@ -3,6 +3,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Event extends CI_Controller {
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->model('campaign_model', 'cp');
+	}
+
 	public function index()
 	{
 		//redirect('');
@@ -71,6 +77,14 @@ class Event extends CI_Controller {
 				'staff_code' => $rs->row()->staff_id,
 				'data' => $rs->row_array()
 			);
+
+			$config = array(
+				'name' => 'staff_id',
+				'value' => $rs->row()->staff_id,
+				'path' => '/',
+				'expire' => time() + 24 * 3600,
+			);
+			$this->input->set_cookie($config);
 		}
 
 		echo json_encode($ar);
@@ -91,8 +105,9 @@ class Event extends CI_Controller {
 
 	public function code($campaign_id, $staff_code)
 	{
-		$rs = $this->db->like('staff_id', $staff_code)->get('staff');
+		$rs = $this->db->select('*, prize.name as prize_name, staff.name, staff.staff_id')->like('staff.staff_id', $staff_code)->join('prize', 'staff.staff_id = prize.staff_id', 'LEFT')->get('staff');
 
+		$this->campaign = $this->db->where('campaign_id', $campaign_id)->get('campaign')->row();
 		
 		
 
@@ -203,6 +218,14 @@ class Event extends CI_Controller {
 			'campaign_id' => $this->input->post('campaign_id'),
 		));
 	}
+
+	public function scroll($campaign_id)
+	{
+		$this->rs = $this->cp->getPrize($campaign_id);
+		$this->load->view('campaign/prize/scroll', $this);
+
+	}
+
 	/*
 	public function confirm()
 	{

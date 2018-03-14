@@ -9,13 +9,31 @@
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/register_qr/font.css">
 	<link rel="stylesheet" href="<?php echo base_url();?>assets/register_qr/style.css?v=<?php echo time();?>">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/2.9.5/jquery.fullpage.min.css">
+
+	<?php if ($this->input->get('type') == 'print'):?>
+
+		<script type="text/javascript">
+			window.print();
+		</script>
+
+		
+
+	<?php endif;?>
+
+	<style>
+			@media print {
+				.pc { display: none;}
+				p.site { color: #000 !important; }
+			}
+		</style>
+
 </head>
 <body>
 	<div id="fullpage">
 		<div id="section1" class='section container'>
 			<div class='row'>
 				<div class='col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2' style="margin-bottom: 20px">
-					<img src="<?php echo base_url();?>assets/register_qr/img/logo.png" class='img-responsive' alt="">
+					<img src="<?php echo base_url();?>assets/register_qr/img/logo.png" class='img-responsive pc' alt="">
 				</div>
 
 
@@ -29,23 +47,40 @@
 
 
 				<div class='col-xs-12 box' style="margin: 15px 0px 0px 0px;">
-					<p class='name'>QR Code ของคุณ</p>
+					<p class='name pc'>QR Code ของคุณ</p>
 				</div>
 
 
 
 				<div class='col-xs-12 box' style="margin: 5px 0px 10px 0px;">
 					<h3 class='name'>คุณ<?php echo $r->name;?></h3>
+					<p style="color: #fff !important;">รหัสพนักงาน <?php echo $r->staff_id;?></p>
+					<p style="color: #fff !important;">เบอร์โทรศัพท์ <?php echo $r->mobile;?></p>
 				</div>
+
+				<?php if ($campaign->vote_active == '0'):?>
 
 				<?php $boots = get_access($r->staff_id, 'major01');?>
 				
 				<div class="col-xs-12" style="margin-top: 5px;">
 					<?php foreach($boots as $b):?>
-						<p style="color: #fff !important; <?php echo $b['can_access'] == 0 ? 'text-decoration: line-through;' : '';?>"><?php echo $b['can_access'];?> สิทธิ์ กิจกรรม<?php echo $b['boot_name'];?></p>
+						<p class='site' style="color: #fff !important; <?php echo $b['can_access'] == 0 ? 'text-decoration: line-through;' : '';?>"><?php echo $b['can_access'];?> สิทธิ์ กิจกรรม<?php echo $b['boot_name'];?></p>
 					<?php endforeach;?>
 
+					<?php if ($r->prize_date != null):?>
+						<?php echo $r->prize_name;?>
+					<?php endif;?>
+
 				</div>
+
+				<?php else:?>
+
+					<div class='col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2' style="margin-bottom: 20px">
+					<a href="<?php echo site_url('vote');?>"><img src="<?php echo base_url('assets/img/vote.png');?>" id="" class='img-responsive' alt="" style="margin: 0 auto;"></a>
+				</div>
+
+
+				<?php endif;?>
 
 				
 

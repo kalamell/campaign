@@ -38,7 +38,11 @@
 
 			  	<div class="form-group">
 			  		<input type="file" class="form-control" name="file"> 
-			  		<button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button> <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">ล้างข้อมูล</a>
+			  		<button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button>
+			  		 <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">ล้างข้อมูล</a>
+
+
+			  		  <a href="<?php echo site_url('member/export_member/'.$f->campaign_id);?>" onclick="" class="btn btn-success btn-sm">ส่งออก Excel</a>
 			  		
 			  	</div>
 
@@ -121,10 +125,13 @@
 			  								<?php endif;?>
 			  							<?php endif;?>
 			  								</td>
-			  						<td width="85">
+			  						<td width="200">
 			  							<div class='btn-group'>
 			  								<a data-toggle="modal" data-remote="false" data-target="#myModal" href="<?php echo site_url('member/edit_member/'.$r->campaign_id.'/'.$r->id);?>" class="btn btn-sm btn-default"><i class="fa fa-edit"></i></a>
 			  								<a href="<?php echo site_url('member/delete_staff/'.$r->campaign_id.'/'.$r->id);?>" onclick="javascript:return confirm('ต้องการลบหรือไม่ ?');"  class="btn btn-sm btn-default"><i class="fa fa-trash"></i></a>
+
+<a href="<?php echo site_url('event/'.$r->campaign_id.'/code/'.$r->staff_id);?>?type=print"class="btn btn-sm btn-default"><i class="fa fa-barcode"></i></a>
+
 			  							</div>
 			  						</td>
 			  						

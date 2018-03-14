@@ -7,6 +7,10 @@ class Main extends CI_Controller {
 	{
 		$campaign_id = 'major01';
 
+		if ($this->input->cookie('staff_id')) {
+			redirect('event/'.$campaign_id.'/code/'.$this->input->cookie('staff_id'));
+		} 
+
 		$rs = $this->db->where('campaign_id', $campaign_id)->get('campaign');
 		if ($rs->num_rows() == 0) redirect('');
 

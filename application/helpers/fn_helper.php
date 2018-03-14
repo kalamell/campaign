@@ -40,10 +40,18 @@ function getMemberPrize($campaign_id, $prize_id)
 	$ci =& get_instance();
 	$rs = $ci->db->where(array(
 		'campaign_id' => $campaign_id,
-		'prize_id' => $prize_id
+		'prize_id' => $prize_id,
+		'prize_date !=' => null,
 	))->order_by('staff_id')->get('staff')->result();
 	return $rs;
 
+}
+
+function getPrizename($prize_id)
+{
+	$ci =& get_instance();
+	$rs = $ci->db->where('id', $prize_id)->get('prize')->row();
+	return $rs->name;
 }
 
 function generateRandomString($length = 5) {
@@ -134,3 +142,38 @@ function sendsms($mobile, $message) {
     return $response;
 }
 
+function getCountDepVote($prize_id)
+{
+	$ci =& get_instance();
+	$rs = $ci->db->where('id', $prize_id)->get('prize');
+	if ($rs->num_rows() == 0) {
+		return '<button type="btn btn-danger">0</button>';
+	} else {
+		if ($rs->row()->gg == NULL || $rs->row()->gg == '0') {
+			return '<button type="btn btn-warning" style="background-color: red; color: #fff;">0</button>';
+		} else {
+			$ex = explode(',', $rs->row()->gg);
+
+			if (count($ex) == 0) {
+				return '<button type="btn btn-warning" style="background-color: red; color: #fff;">0</button>';
+			} else {
+				return '<button type="btn btn-default">'.count($ex).'</button>';
+			}
+		}
+	}
+}
+
+function countBoot($boot_id, $staff_id)
+{
+	$ci =& get_instance();
+	$rs = $ci->db->where(array(
+		'boot_id' => $boot_id,
+		'staff_id' => $staff_id
+	))->order_by('ba_id', 'DESC')->get('boots_access');
+
+	if ($rs->num_rows() == 0) {
+		return '-';
+	} else {
+		return $rs->row()->created_date;
+	}
+}
