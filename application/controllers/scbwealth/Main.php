@@ -25,63 +25,7 @@ class Main extends CI_Controller {
 		$this->load->view('id', $data);
 	}
 
-	/*
-	// งานเช้า
-	public function checkuser()
-	{
-		$ar = array(
-			'result' => false,
-			'msg' => '',
-		);
-		$config = array(
-			array(
-				'field' => 'code',
-				'label' => 'Staff ID',
-				'rules' => 'required'
-			),
-			array(
-				'field' => 'mobile',
-				'label' => 'Mobile',
-				'rules' => 'required'
-			)
-		);
-		$this->form_validation->set_rules($config);
-		if ($this->form_validation->run()) {
-			$rs = $this->db->like('code', $this->input->post('code'))->get('member');
-			if ($rs->num_rows()==0) {
-				$ar = array(
-					'result' => false,
-					'msg' => 'ไม่มีรหัสนี้ในระบบ',
-				);
-			} else {
-				$this->db->like('code', $this->input->post('code'))->update('member', array(
-					'mobile' => $this->input->post('mobile'),
-				));
-				if ($rs->row()->id == '') {
-					$rs2 = $this->db->like('code', $rs->row()->code)->get('member');
-					$ar = array(
-						'result' => true,
-						'exists' => false,
-						'data' => $rs2->row()
-					);
-				} else {
-					$ar = array(
-						'result' => true,
-						'exists' => true,
-						'data' => $rs->row()
-					);
-				}
-			}
-		} else {
-			$ar = array(
-				'result' => false,
-				'msg' => 'กรอกข้อมูลไม่ถูกต้อง',
-			);
-		}
-		echo json_encode($ar);
-	}
-	*/
-
+	
 
 	public function checkuser()
 	{

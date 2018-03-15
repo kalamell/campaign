@@ -7,6 +7,7 @@ class Event extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('campaign_model', 'cp');
+		$this->load->model('member_model', 'md');
 	}
 
 	public function index()
@@ -32,7 +33,11 @@ class Event extends CI_Controller {
 		
 			$this->load->view('campaign/register/index', $this);
 		} else {
-			$this->load->view('register/main', $this);
+			if ($campaign_id == 'scbchampion2017') {
+				$this->load->view('scb2017/normal/index', $this);
+			} else {
+				$this->load->view('register/main', $this);
+			}
 		}
 	}
 
@@ -229,7 +234,89 @@ class Event extends CI_Controller {
 
 	public function vip($campaign_id)
 	{
-		
+		if ($campaign_id == 'scbchampion2017') {
+			$this->load->view('scb2017/vip/index');
+		}
+	}
+
+
+	/* scb */
+	public function check_scb()
+	{
+		$ar = array(
+			'result' => false,
+		);
+		$rs = $this->db->where(array(
+			'staff_id' => $this->input->post('staff_id'),
+			'staff.campaign_id' => 'scbchampion2017'
+		))->join('department', 'staff.dep_id = department.dep_id', 'LEFT')->get('staff');
+
+		if ($rs->num_rows() > 0) {
+			$ar = array(
+				'result' => true,
+				'type' => $rs->row()->seat,
+				'data' => $rs->row(),
+			);
+		}
+
+		echo json_encode($ar);
+
+	}
+
+	public function checkin_scb()
+	{
+		$this->db->set('checkin', 'NOW()', false)->where(array(
+			'staff_id' => $this->input->post('staff_id'),
+			'campaign_id' => 'scbchampion2017',
+		))->update('staff');
+	}
+
+	public function import_scb()
+	{
+
+			$handle = fopen("./upload/scb-champ.csv", "r");
+			$k = 0;
+			while (($data = fgets($handle)) !== FALSE) {
+			 	list($que, $staff_type, $prize_type, $dep, $staff_id,  $name, $position, $mobile, $seat) = explode(",", $data);
+			 	$dep_id = $this->md->dep($dep, $this->input->post('campaign_id'));
+
+			 	$rs = $this->db->where(array(
+			 		'staff_id' => $staff_id,
+			 		'campaign_id' => 'scbchampion2017'
+			 	))->get('staff');
+
+			 	if ($rs->num_rows() == 0) {
+			 		$this->db->insert('staff', array(
+			 			'staff_id' => $staff_id,
+			 			'staff_code' => $staff_id,
+			 			'campaign_id' => 'scbchampion2017',
+			 			'name' => $name,
+			 			'position' => $position,
+			 			'mobile' => $mobile,
+			 			'seat' => $seat,
+			 			'que' => $que,
+			 			'staff_type' => $staff_type,
+			 			'prize' => $prize_type,
+			 			'dep_id' => $dep_id
+			 		));
+			 	} else {
+					$this->db->where('staff_id', $staff_id)->update('staff', array(
+			 			'staff_code' => $staff_id,
+			 			'campaign_id' => 'scbchampion2017',
+			 			'name' => $name,
+			 			'position' => $position,
+			 			'mobile' => $mobile,
+			 			'seat' => $seat,
+			 			'que' => $que,
+			 			'staff_type' => $staff_type,
+			 			'prize' => $prize_type,
+			 			'dep_id' => $dep_id
+			 		));
+			 	}
+
+
+			 	$k++;
+			}
 	}
 
 	/*

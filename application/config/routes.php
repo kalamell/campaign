@@ -58,6 +58,8 @@ $route['event/checkregister'] = 'event/checkregister';
 $route['event/confirm'] = 'event/confirm';
 $route['event/savedata'] = 'event/savedata';
 
+$route['event/check_scb'] = 'event/check_scb';
+$route['event/checkin_scb'] = 'event/checkin_scb';
 
 $route['event/(:any)'] = 'event/register/$1';
 
@@ -67,6 +69,11 @@ $route['event/(:any)/vip'] = 'event/vip/$1';
 $route['event/(:any)/confirm'] = 'event/confirm/$1';
 $route['event/(:any)/code/(:any)'] = 'event/code/$1/$2';
 $route['event/(:any)/qr/(:any)'] = 'event/qr/$1/$2';
+
+
+$route['event/(:any)/import_scb'] = 'event/import_scb';
+
+
 $route['event/(:any)'] = 'event/register/$1';
 
 
