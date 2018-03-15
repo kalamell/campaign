@@ -24,18 +24,25 @@
         ลงทะเบียนเข้าร่วมงาน
       </div>
 
-      <form action="" class="form">
-        <input type="text" class="input" placeholder="ชื่อบริษัท">
-        <input type="text" class="input" placeholder="ชื่อ">
-        <input type="text" class="input" placeholder="นามสกุล">
-        <input type="text" class="input" placeholder="เบอร์มือถือ">
+      <?php echo form_open('vip/do_submit');?>
+        <input type="text" name="company" class="input required" placeholder="ชื่อบริษัท">
+        <input type="text" name="name" class="input required" placeholder="ชื่อ">
+        <input type="text" name="surname" class="input required" placeholder="นามสกุล">
+        <input type="text" name="mobile" class="input required" placeholder="เบอร์มือถือ">
 
         <p class="sm">*กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน</p>
 
         <button type="submit" class="btn">ถัดไป</button>
 
-      </form>
+      <?php echo form_close();?>
     </div>
+
+    <script type="text/javascript" src="<?php echo base_url();?>asets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>asets/js/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+      $('form').validate();
+    </script>
 	
 
   </body>

@@ -24,18 +24,26 @@
         Registration
       </div>
 
-      <form action="" class="form">
-        <input type="text" class="input" placeholder="Company Name">
-        <input type="text" class="input" placeholder="First Name">
-        <input type="text" class="input" placeholder="Last Name">
-        <input type="text" class="input" placeholder="Mobile number">
+      <?php echo form_open('vip/do_submit');?>
+        <input type="text" name="company" class="input required" placeholder="Company Name">
+        <input type="text" name="name" class="input required" placeholder="First Name">
+        <input type="text" name="surname" class="input required" placeholder="Last Name">
+        <input type="text" name="mobile" maxlength="20" minlength="9" class="input required" placeholder="Mobile number">
 
         <p class="sm">*Please check your information before submit</p>
 
         <button type="submit" class="btn">Submit</button>
 
-      </form>
+      <?php echo form_close();?>
     </div>
+
+    <script type="text/javascript" src="<?php echo base_url();?>asets/js/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url();?>asets/js/jquery.validate.min.js"></script>
+
+    <script type="text/javascript">
+      $('form').validate();
+    </script>
+  
 	
 
   </body>

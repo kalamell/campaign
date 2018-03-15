@@ -4,6 +4,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 class Vip extends CI_Controller {
 
 	protected $lang = 'th';
+	private $campaign_id = 'kerry';
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -33,9 +35,49 @@ class Vip extends CI_Controller {
 
 	public function do_submit()
 	{
-		
+		$config = array(
+			array(
+				'field' => 'company',
+				'label' => 'company',
+				'rules' => 'required'
+			),
+			array(
+				'field' => 'name',
+				'label' => 'name',
+				'rules' => 'required'
+			)
+			array(
+				'field' => 'surname',
+				'label' => 'surname',
+				'rules' => 'required'
+			)
+			array(
+				'field' => 'mobile',
+				'label' => 'mobile',
+				'rules' => 'required'
+			)
+		);
+		$this->form_validation->set_rules($config);
+		if ($this->form_validation->run()) {
+
+		} else {
+			redirect('vip');
+		}
 	}
 	
+
+	private function getidvip()
+	{
+		$this->load->helper('string');
+		$str = random_string('alnum', 5);
+		
+		$rs = $this->db->where('staff_code', $str)->get('staff');
+		if ($rs->num_rows()==0) {
+			return $str;
+		} else {
+			$this->getid();
+		}
+	}
 
 	public function register($campaign_id)
 	{
@@ -119,6 +161,9 @@ class Vip extends CI_Controller {
 			$this->getid();
 		}
 	}
+
+
+	
 
 	public function code($campaign_id, $staff_code)
 	{
