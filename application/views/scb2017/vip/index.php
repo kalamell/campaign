@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/font/font.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/normalize.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/site.css">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/site.css?v=3">
   </head>
   <body>
     <div class="container vip">

@@ -50,8 +50,9 @@ body {
 
 .container {
     min-height: 100vh;
-    background: transparent url(../img/bg-bottom.jpg) no-repeat bottom center;
+    background: transparent url(../img/bg.jpg) no-repeat bottom center;
     text-align: center;
+    background-size: cover;
 }
 
 .vip {
