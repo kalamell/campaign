@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>SCB</title>
+    <title>2017 THE CHAMPIONS DAY</title>
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/normal/font/font.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/normal/css/normalize.css">
