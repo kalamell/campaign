@@ -58,13 +58,17 @@ $route['event/checkregister'] = 'event/checkregister';
 $route['event/confirm'] = 'event/confirm';
 $route['event/savedata'] = 'event/savedata';
 
+
+$route['event/(:any)'] = 'event/register/$1';
+
 $route['event/(:any)/confirm_data/(:any)'] = 'event/confirm_data/$1/$2';
 $route['event/(:any)/register'] = 'event/register/$1';
+$route['event/(:any)/vip'] = 'event/vip/$1';
 $route['event/(:any)/confirm'] = 'event/confirm/$1';
 $route['event/(:any)/code/(:any)'] = 'event/code/$1/$2';
 $route['event/(:any)/qr/(:any)'] = 'event/qr/$1/$2';
+$route['event/(:any)'] = 'event/register/$1';
 
-$route['event/(:any)'] = 'event/id/$1';
 
 $route['backend'] = 'backend/member';
 

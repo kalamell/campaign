@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vip extends CI_Controller {
 
-	protected $lang = 'th';
+	protected $_lang = 'th';
 	private $campaign_id = 'kerry';
 
 	public function __construct()
@@ -11,26 +11,34 @@ class Vip extends CI_Controller {
 		parent::__construct();
 		$this->load->model('campaign_model', 'cp');
 
-		if ($this->session->userdata('lang')) {
-			$this->lang = $this->session->userdata('lang');
+		if ($this->session->userdata('_lang')) {
+			$this->_lang = $this->session->userdata('_lang');
 		} else {
-			$this->lang = 'th';
+			$this->_lang = 'th';
 		}
 	}
 
 	public function index()
 	{
+		$this->session->set_userdata('_curl', current_url());
 
-		$this->load->view('vip/'.$this->lang.'/index', $this);
+		$staff_id = $this->getidvip();
+		$this->staff_id = $staff_id;
+		$this->load->view('vip/'.$this->_lang.'/index', $this);
 	}
 
-	public function setlang($lang)
+	public function setlang($_lang)
 	{
-		if ($lang != 'th' && $lang != 'en') {
-			$lang = 'th';
+		if ($_lang != 'th' && $_lang != 'en') {
+			$_lang = 'th';
 		}
-		$this->session->set_userdata('lang', $lang);
-		redirect('vip?lang='.$lang);
+		$this->session->set_userdata('_lang', $_lang);
+
+		if ($this->session->userdata('_curl')) {
+			redirect($this->session->userdata('_curl'));
+		} else {
+			redirect('vip?_lang='.$_lang);
+		}
 	}
 
 	public function do_submit()
@@ -45,12 +53,12 @@ class Vip extends CI_Controller {
 				'field' => 'name',
 				'label' => 'name',
 				'rules' => 'required'
-			)
+			),
 			array(
 				'field' => 'surname',
 				'label' => 'surname',
 				'rules' => 'required'
-			)
+			),
 			array(
 				'field' => 'mobile',
 				'label' => 'mobile',
@@ -59,23 +67,58 @@ class Vip extends CI_Controller {
 		);
 		$this->form_validation->set_rules($config);
 		if ($this->form_validation->run()) {
-
+			
+			$this->db->where('staff_id', $this->input->post('staff_id'))
+				->where('staff_type', 'vip')
+				->where('campaign_id', $this->campaign_id)
+				->update('staff', array(
+					'name' => $this->input->post('name').' '.$this->input->post('surname'),
+					'mobile' => $this->input->post('mobile'),
+					'company' => $this->input->post('company'))
+				);
+			redirect('vip/id/'.$this->input->post('staff_id'));
 		} else {
 			redirect('vip');
 		}
+	}
+
+
+	public function id($staff_id)
+	{
+		$this->session->set_userdata('_curl', current_url());
+		
+		$this->r = $this->db->where('staff_id', $staff_id)
+					->where('staff_type', 'vip')
+					->where('campaign_id', $this->campaign_id)->get('staff')->row();
+
+		$this->load->view('vip/'.$this->_lang.'/result', $this);
 	}
 	
 
 	private function getidvip()
 	{
-		$this->load->helper('string');
-		$str = random_string('alnum', 5);
-		
-		$rs = $this->db->where('staff_code', $str)->get('staff');
+				
+		$rs = $this->db->where('campaign_id', $this->campaign_id)->where('staff_type', 'vip')->order_by('staff_id', 'DESC')->limit(1)->get('staff');
 		if ($rs->num_rows()==0) {
-			return $str;
+			$this->db->insert('staff', array(
+				'campaign_id' => $this->campaign_id,
+				'staff_type' => 'vip',
+				'staff_id' => sprintf('%05d', 1),
+				'staff_code' => sprintf('%05d', 1),
+			));
+			return sprintf('%05d', 1);
 		} else {
-			$this->getid();
+			$id = (int)$rs->row()->staff_id;
+			$id++;
+
+			$this->db->insert('staff', array(
+				'campaign_id' => $this->campaign_id,
+				'staff_type' => 'vip',
+				'staff_id' => sprintf('%05d', $id),
+				'staff_code' => sprintf('%05d', $id),
+			));
+
+			return sprintf('%05d', $id);
 		}
 	}
 

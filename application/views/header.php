@@ -8,7 +8,7 @@
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/bootstrap-theme.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/css/main.css">
-	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/fontawesome/css/fontawesome-all.min.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="<?php echo base_url();?>assets/js/datetimepicker/bootstrap-datetimepicker.min.css">
 
 	<style type="text/css">
@@ -29,7 +29,7 @@
 	        <span class="icon-bar"></span> 
 	      </button>
 	      <a class="navbar-brand" href="<?php echo site_url();?>" style="">
-	      	Campaign Solution</a>
+	      	Campaign TH</a>
 	    </div>
 
 	    <!-- Collect the nav links, forms, and other content for toggling -->

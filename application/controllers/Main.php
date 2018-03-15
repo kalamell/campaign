@@ -1,11 +1,11 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Main extends CI_Controller {
+class Main extends Front {
 
 	public function index()
 	{
-		redirect('vip');
+		
 		$campaign_id = 'major01';
 
 		if ($this->input->cookie('staff_id')) {

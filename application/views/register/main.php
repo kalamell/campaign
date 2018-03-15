@@ -15,7 +15,7 @@
 	<div id="fullpage">
 		<div id="section0" class='section container'>
 			<div class='row'>
-				<div class='col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2' style="margin-bottom: 20px">
+				<div class='col-md-2 col-md-offset-5 col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2' style="display: none; margin-bottom: 20px">
 					<img src="<?php echo base_url();?>assets/register_qr/img/logo.png" class='img-responsive' alt="">
 				</div>
 

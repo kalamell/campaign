@@ -226,6 +226,12 @@ class Event extends CI_Controller {
 
 	}
 
+
+	public function vip($campaign_id)
+	{
+		
+	}
+
 	/*
 	public function confirm()
 	{
