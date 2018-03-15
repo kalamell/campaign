@@ -5,6 +5,7 @@ class Main extends CI_Controller {
 
 	public function index()
 	{
+		redirect('vip');
 		$campaign_id = 'major01';
 
 		if ($this->input->cookie('staff_id')) {

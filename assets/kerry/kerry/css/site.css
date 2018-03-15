@@ -1,0 +1,172 @@
+html {
+    box-sizing: border-box;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
+body {
+    font-family:"SukhumvitSet", sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    line-height: 1.4;
+	-webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #f9f9f9;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    outline: 0;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #f9f9f9;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #f9f9f9;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #f9f9f9;
+}
+:-moz-placeholder { /* Firefox 18- */
+    color: #f9f9f9;
+}
+
+.container {
+    min-height: 100vh;
+    background: url(../img/bg.jpg) no-repeat top center;
+    text-align: center;
+}
+
+.header {
+    height: 368px;
+    padding-top: 200px;
+    background: url(../img/header.png) no-repeat top center;
+}
+
+.sub {
+    color: #f26f21;
+    font-size: 1.6em;
+    padding: .75em 0;
+}
+
+.input {
+    display: block;
+    width: 90%;
+    padding: .75em;
+    margin: auto auto 20px;
+    background: #141414;
+    border: 2px solid #e8b01f;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 2.2em;
+    color: #f9f9f9;
+}
+
+.input:focus {
+    border-color: #f9f9f9;
+}
+
+
+.btn {
+    display: block;
+    width: 206px;
+    height: 61px;
+    border: 0;
+    margin: 20px auto;
+
+    background: url(../img/bg-btn.png) no-repeat;
+    background-size: contain;
+    text-align: center;
+    font-size: 1.8em;
+    cursor: pointer;
+}
+
+.btn:active {
+    opacity: .8;
+}
+
+
+.confirm {
+    padding-top: 40px;
+}
+
+.confirm .form {
+    margin-bottom: 80px;
+}
+
+
+.name {
+    margin: 1.5em 0;
+    font-size: 2.2em;
+    text-align: center;
+}
+
+.name span {
+    display: inline-block;
+    border-bottom: 2px solid;
+}
+
+.sm {
+    font-size: 1.4em;
+}
+
+.btn-back {
+    display: block;
+    width: 160px;
+    padding: 1em 0;
+    margin: 20px auto;
+    color: #f26f21;
+    font-size: 1.4em;
+    background: #141414;
+}
+
+.btn-back:active {
+    opacity: 0.8;
+}
+
+
+
+
+.qr {
+    padding: 20px 0;
+}
+
+.qr-code {
+    display: block;
+    max-width: 250px;
+    margin: 0 auto 10px;
+}
+
+.description p {
+    margin: 0;
+}
+
+.description .sm {
+    color: #f26f21;    
+}
+
+.description .name {
+    margin: 0.5em 0;
+}
+
+.seat-number {
+    font-size: 3em;
+}
+
+.seat-number span {
+    font-size: 0.5em;
+}
+
+.footer {
+    width: 90vw;
+    padding: 1em 0;
+    border: 1px solid;
+    margin: auto;
+    color: #f9f9f9;
+    font-size: 1.2em;
+}
