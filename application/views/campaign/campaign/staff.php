@@ -88,6 +88,7 @@
 			  			<tr>
 			  				
 			  				<th width="120">รหัสประจำตัว</th>
+			  				<th>รอบลงทะเบียน</th>
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
 			  				<th>ข้อมูล</th>
@@ -100,29 +101,33 @@
 			  		</thead>
 			  		<tbody>
 			  			<?php if (count($rs) == 0):?>
-			  				<tr><td colspan="6" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
+			  				<tr><td colspan="8" style="text-align: center;"> - - - - ไม่มีข้อมูล - - - -</td></tr>
 			  			<?php else:?>
 			  				<?php foreach($rs as $r):?>
 			  					<tr>
 			  						
 
 			  						<td><?php echo $r->staff_id;?></td>
+			  						<td><?php echo $r->regis_time;?></td>
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
-			  						<td>ตำแหน่ง : <?php echo $r->position;?><br> หน่วยงาน : <?php echo $r->dep_name;?><br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 
+			  						<td>ตำแหน่ง : <?php echo $r->position;?>
+			  							<br> หน่วยงาน : <?php echo $r->dep_name;?>
+			  							<br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 
+			  							<?php if ($r->no_prize == 1):?>
+			  								<strong>
+			  								<br>คิวที่ <?php echo $r->que;?> <br>รางวัล <?php echo $r->prize;?><br>เลขที่นั่ง <?php echo $r->seat;?>
+			  								</strong>
+			  							<?php endif;?>
 			  						</td>
-			  						<td><?php echo $r->status;?></td>
+			  						<td><?php echo $r->staff_type == '' ? '-' : $r->staff_type;?></td>
 			  						<td style="text-align: center;"><?php echo $r->checkin == null ? '<a href="'.site_url('member/checkin/'.$r->campaign_id.'/'.$r->id).'" class="btn btn-sm btn-default">เข้างาน</a>' : '<label class="label label-success">'.$r->checkin.'</label>';?></td>
 
 			  						<td>
 			  							<?php if ($r->no_prize == '2'):?>
-			  								ไม่มีสิทธิ์รับรางวัล
+			  								&nbsp;
 			  							<?php else:?>
-			  								<?php if ($r->prize_date != null):?>
-			  									<?php echo $r->prize_name;?>
-			  								<?php else:?>
-			  									-
-			  								<?php endif;?>
+			  								<?php echo $r->prize;?>
 			  							<?php endif;?>
 			  								</td>
 			  						<td width="200">

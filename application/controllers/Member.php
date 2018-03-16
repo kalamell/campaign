@@ -162,42 +162,40 @@ class Member extends Front {
 				while (($data = fgets($handle)) !== FALSE) {
 				    if ($k > 0) {
 				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
-				    	list($no, $staff_code, $code, $name,  $comp_code, $position, $group, $job, $entrance, $lucky, $status, $no_prize) = explode(",", $data);
+				    	list($no, $regis_time, $staff_type, $que, $prize_type, $prize, $staff_code, $name, $position,  $comp_code, $region, $area, $mobile, $group, $seat) = explode(",", $data);
 
 				    	
-				    	if ($no_prize == 'no') {
+				    	if ($seat == '') {
 				    		$no_prize = '2';
 				    	}
 
-				    	if (trim($entrance) == 'เข้าร่วมงาน' && trim($lucky) == 'จับรางวัล') {
-				    		$no_prize = '0';
-				    	}
-
-				    	if (trim($entrance) == '' && trim($lucky) == 'จับรางวัล') {
+				    	if ($no_prize != '') {
 				    		$no_prize = '1';
 				    	}
 
-
-				    	
-				    	
-
 				    	$dep_id = $this->md->dep($comp_code, $this->input->post('campaign_id'));
 
-				    	$chk = $this->db->where('staff_id', $code)->get('staff');
+				    	$chk = $this->db->where('staff_id', $staff_code)->get('staff');
 				    	if ($chk->num_rows() ==0) {
 				    		
 							$this->db->insert('staff', array(
-								'staff_id' => $code,
+								'staff_id' => $staff_code,
 								'staff_code' => $staff_code,
 								'name' => $name,
 								'position' => $position,
 								'dep_id' => $dep_id,
-								'mobile' => '-',
+								'mobile' => $mobile,
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'status' => $status,
-								
+								'que' => $que,
+								'prize' => $prize,
+								'prize_type' => $prize_type,
+								'group_name' => $group,
+								'seat' => trim($seat),
+								'regis_time' => $regis_time,
+								'sort_no' => $no,	
+								'staff_type' => $staff_type,							
 							));
 
 							//echo $this->db->last_query()."<BR>";
@@ -210,12 +208,18 @@ class Member extends Front {
 								'name' => $name,
 								'position' => $position,
 								'dep_id' => $dep_id,
-								'mobile' => '-',
+								'mobile' => $mobile,
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'status' => $status,
-								'addi' => 1
+								'que' => $que,
+								'prize' => $prize,
+								'prize_type' => $prize_type,
+								'group_name' => $group,
+								'seat' => trim($seat),
+								'regis_time' => $regis_time,
+								'sort_no' => $no,	
+								'staff_type' => $staff_type,								
 							));
 
 						//	echo $this->db->last_query()."<BR>";

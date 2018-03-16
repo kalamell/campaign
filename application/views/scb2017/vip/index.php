@@ -8,7 +8,7 @@
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/font/font.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/normalize.css">
-    <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/site.css?v=3">
+    <link rel="stylesheet" href="<?php echo base_url();?>assets/scb2017/vip/css/site.css?v=<?php echo time();?>">
   </head>
   <body>
     <div class="container vip">
@@ -117,7 +117,7 @@
             staff_id: $("#staff_id").val()
           }, function(res) {
             if (res.result) {
-              if (res.type == null) {
+              if (res.type == '') {
                 $(".overlay").fadeIn();
               } else {
                 $("div.id").html(res.data.staff_id);
