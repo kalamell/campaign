@@ -70,6 +70,7 @@ $route['event/(:any)/confirm'] = 'event/confirm/$1';
 $route['event/(:any)/code/(:any)'] = 'event/code/$1/$2';
 $route['event/(:any)/qr/(:any)'] = 'event/qr/$1/$2';
 
+$route['event/(:any)/checkin'] = 'event/checkin/$1';
 
 $route['event/(:any)/import_scb'] = 'event/import_scb';
 

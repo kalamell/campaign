@@ -319,6 +319,30 @@ class Event extends CI_Controller {
 			}
 	}
 
+	public function checkin($campaign_id)
+	{
+		$this->no_come = $this->db->where('checkin is null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+		$this->come = $this->db->where('checkin is not null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+
+
+
+		$this->que_no_come = $this->db->where('seat !=', '')->where('checkin is null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+		$this->que_come = $this->db->where('seat !=', '')->where('checkin is not null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+
+		$this->no_come_11 = $this->db->like('regis_time', '11')->where('checkin is null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+		$this->come_11 = $this->db->like('regis_time', '11')->where('checkin is not null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+
+
+		$this->no_come_14 = $this->db->like('regis_time', '14')->where('checkin is null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+		$this->come_14 = $this->db->like('regis_time', '14')->where('checkin is not null', null, false)->where('campaign_id', $campaign_id)->count_all_results('staff');
+		
+		$this->rs = $this->db->where('checkin is null', null, false)->where('campaign_id', $campaign_id)->get('staff')->result();
+
+		$this->rs2 = $this->db->where('checkin is not null', null, false)->where('campaign_id', $campaign_id)->get('staff')->result();
+
+		$this->load->view('scb2017/checkin', $this);
+	}
+
 	/*
 	public function confirm()
 	{

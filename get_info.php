@@ -13,8 +13,9 @@ $ar = array(
 
 $ar = get_access($ex[0], trim($ex[1]));
 
-$sql = "SELECT staff_id, staff_code, name, position, mobile FROM staff WHERE staff_id like '%".$ex[0]."%' AND campaign_id = '".$ex[1]."'";
-$rs_staff = mysql_query($sql);
+$sql = "SELECT staff_id, staff_code, name, position, mobile, seat FROM staff WHERE staff_id like '%".$ex[0]."%' AND campaign_id = '".$ex[1]."'";
+
+$rs_staff = mysql_query($sql) or die(mysql_error());
 $staff = '';
 while($f_staff = mysql_fetch_assoc($rs_staff)) {
 	$staff = $f_staff;
