@@ -33,7 +33,7 @@ class Event extends CI_Controller {
 		
 			$this->load->view('campaign/register/index', $this);
 		} else {
-			if ($campaign_id == 'scbchampion2017') {
+			if ($campaign_id == 'scbchampion17') {
 				$this->load->view('scb2017/normal/index', $this);
 			} else {
 				$this->load->view('register/main', $this);
@@ -234,7 +234,7 @@ class Event extends CI_Controller {
 
 	public function vip($campaign_id)
 	{
-		if ($campaign_id == 'scbchampion2017') {
+		if ($campaign_id == 'scbchampion17') {
 			$this->load->view('scb2017/vip/index');
 		}
 	}
@@ -248,7 +248,7 @@ class Event extends CI_Controller {
 		);
 		$rs = $this->db->where(array(
 			'staff_id' => $this->input->post('staff_id'),
-			'staff.campaign_id' => 'scbchampion2017'
+			'staff.campaign_id' => 'scbchampion17'
 		))->join('department', 'staff.dep_id = department.dep_id', 'LEFT')->get('staff');
 
 		if ($rs->num_rows() > 0) {
@@ -267,7 +267,7 @@ class Event extends CI_Controller {
 	{
 		$this->db->set('checkin', 'NOW()', false)->where(array(
 			'staff_id' => $this->input->post('staff_id'),
-			'campaign_id' => 'scbchampion2017',
+			'campaign_id' => 'scbchampion17',
 		))->update('staff');
 	}
 
@@ -282,14 +282,14 @@ class Event extends CI_Controller {
 
 			 	$rs = $this->db->where(array(
 			 		'staff_id' => $staff_id,
-			 		'campaign_id' => 'scbchampion2017'
+			 		'campaign_id' => 'scbchampion17'
 			 	))->get('staff');
 
 			 	if ($rs->num_rows() == 0) {
 			 		$this->db->insert('staff', array(
 			 			'staff_id' => $staff_id,
 			 			'staff_code' => $staff_id,
-			 			'campaign_id' => 'scbchampion2017',
+			 			'campaign_id' => 'scbchampion17',
 			 			'name' => $name,
 			 			'position' => $position,
 			 			'mobile' => $mobile,
@@ -302,7 +302,7 @@ class Event extends CI_Controller {
 			 	} else {
 					$this->db->where('staff_id', $staff_id)->update('staff', array(
 			 			'staff_code' => $staff_id,
-			 			'campaign_id' => 'scbchampion2017',
+			 			'campaign_id' => 'scbchampion17',
 			 			'name' => $name,
 			 			'position' => $position,
 			 			'mobile' => $mobile,
