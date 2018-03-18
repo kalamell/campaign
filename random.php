@@ -4,7 +4,7 @@ include('mysql.php');
 $force_group = isset($_GET['force_group']) ? mysql_real_escape_string($_GET['force_group']) : '';
 
 
-$query 	= "SELECT * FROM  `prize` WHERE staff_id IS NULL and campaign_id = 'major01' ORDER BY `order` ASC LIMIT 1";
+$query 	= "SELECT * FROM  `prize` WHERE staff_id IS NULL and campaign_id = 'kerry' ORDER BY `order` ASC LIMIT 1";
 
 
 $result = mysql_query($query);
@@ -36,10 +36,10 @@ while($row = mysql_fetch_assoc($result)){
 }
 
 /*
-$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `checkin` IS NOT NULL AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
+$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `checkin` IS NOT NULL AND staff.campaign_id = 'kerry' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
 */
 
-$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND staff.campaign_id = 'major01' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
+$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND staff.campaign_id = 'kerry' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
 
 
 

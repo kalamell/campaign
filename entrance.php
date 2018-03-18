@@ -21,14 +21,25 @@ if (mysql_num_rows($rs) > 0) {
 		$boots = $f;
 	}
 
-	$sql = "SELECT staff_id, staff_code, name, position, mobile FROM staff WHERE staff_id like '%".$ex[0]."%' AND campaign_id = '".$ex[1]."'";
+	$sql = "SELECT staff_id, staff_code, name, position, mobile, no_prize FROM staff WHERE staff_id like '%".$ex[0]."%' AND campaign_id = '".$ex[1]."'";
 	$rs_staff = mysql_query($sql);
 	$staff = '';
+
 	while($f_staff = mysql_fetch_assoc($rs_staff)) {
 		$staff = $f_staff;
 	}
 
 	if ($boots['type_boot'] == 'register') {
+
+		$rs = $this->db->like('staff_id', $this->input->post('code'))->where('campaign_id', $campaign_id)->get('staff');
+
+			
+		if ($staff['no_prize'] == '0') {
+			$sql = "UPDATE staff SET no_prize = 1 WHERE staff_id = '".$ex[0]."' AND campaign_id = '".$ex[1]."'";
+			mysql_query($sql);
+		}
+
+
 		$sql = "INSERT INTO boots_access(boot_id, staff_id, created_date) VALUES('".$boot_id."', '".$ex[0]."', NOW())";
 		mysql_query($sql);
 

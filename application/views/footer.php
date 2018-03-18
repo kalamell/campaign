@@ -70,6 +70,7 @@
 				'no_prize': $("#no_prize:checked").val(),
 				'shop_name': $("#shop_name").val(),
 				'note': $("#note").val(),
+				'seat': $("#seat").val(),
 			 }, function(res) {
 				
 				top.location.reload();
@@ -93,6 +94,7 @@
 				'no_prize': $("#no_prize:checked").val(),
 				'shop_name': $("#shop_name").val(),
 				'note': $("#note").val(),
+				'seat': $("#seat").val(),
 			 }, function(res) {
 				
 				top.location.reload();

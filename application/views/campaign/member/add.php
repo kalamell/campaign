@@ -18,6 +18,11 @@
       <input type="text" class="form-control required" value=""  id="staff_code" name="staff_code" maxlength="50" minlength="1" placeholder="ชื่อผู้ใช้งาน">
     </div>
 
+    <div class="form-group col-md-12">
+      <label for="seat">เลขที่นั่ง</label>
+      <input type="text" class="form-control required" value=""  id="seat" name="seat" maxlength="50" minlength="1" placeholder="">
+    </div>
+
 
     <div class="form-group col-md-12">
       <label for="name">ชื่อ</label>

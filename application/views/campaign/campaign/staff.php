@@ -88,7 +88,6 @@
 			  			<tr>
 			  				
 			  				<th width="120">รหัสประจำตัว</th>
-			  				<th>รอบลงทะเบียน</th>
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
 			  				<th>ข้อมูล</th>
@@ -108,17 +107,18 @@
 			  						
 
 			  						<td><?php echo $r->staff_id;?></td>
-			  						<td><?php echo $r->regis_time;?></td>
+			  						
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
 			  						<td>ตำแหน่ง : <?php echo $r->position;?>
 			  							<br> หน่วยงาน : <?php echo $r->dep_name;?>
 			  							<br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 
-			  							<?php if ($r->no_prize == 1):?>
-			  								<strong>
-			  								<br>คิวที่ <?php echo $r->que;?> <br>รางวัล <?php echo $r->prize;?><br>เลขที่นั่ง <?php echo $r->seat;?>
-			  								</strong>
-			  							<?php endif;?>
+			  							<br>เลขที่นั่ง : <?php echo $r->seat;?>
+
+			  							<?php if ($r->company != null):?>
+			  								<br>บริษัท : <?php echo $r->company;?>
+			  						<?php endif;?>
+			  							
 			  						</td>
 			  						<td><?php echo $r->staff_type == '' ? '-' : $r->staff_type;?></td>
 			  						<td style="text-align: center;"><?php echo $r->checkin == null ? '<a href="'.site_url('member/checkin/'.$r->campaign_id.'/'.$r->id).'" class="btn btn-sm btn-default">เข้างาน</a>' : '<label class="label label-success">'.$r->checkin.'</label>';?></td>

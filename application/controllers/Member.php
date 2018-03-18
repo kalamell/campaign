@@ -162,40 +162,39 @@ class Member extends Front {
 				while (($data = fgets($handle)) !== FALSE) {
 				    if ($k > 0) {
 				    	//list($code, $name, $position, $dep_name, $mobile, $email, $checkin) = explode(",", $data);
-				    	list($no, $regis_time, $staff_type, $que, $prize_type, $prize, $staff_code, $name, $position,  $comp_code, $region, $area, $mobile, $group, $seat) = explode(",", $data);
+				    	//list($no, $regis_time, $staff_type, $que, $prize_type, $prize, $staff_code, $name, $position,  $comp_code, $region, $area, $mobile, $group, $seat) = explode(",", $data);
+
+				    	list($no, $staff_id, $name, $position, $comp_code, $seat, $status1, $status2, $status, $no_prize) = explode(',', $data);
+
+				    	if (trim($no_prize) == 'no') {
+				    		$no_prize = 2;
+				    	} else {
+				    		if (trim($status) == 'จับรางวัล') {
+				    			$no_prize = 1;
+				    		} else {
+				    			$no_prize = 0;
+				    		}
+				    	}
 
 				    	
-				    	if ($seat == '') {
-				    		$no_prize = '2';
-				    	}
-
-				    	if ($no_prize != '') {
-				    		$no_prize = '1';
-				    	}
-
+				    	
 				    	$dep_id = $this->md->dep($comp_code, $this->input->post('campaign_id'));
 
-				    	$chk = $this->db->where('staff_id', $staff_code)->get('staff');
+				    	$chk = $this->db->where('staff_id', $staff_id)->where('campaign_id', $this->input->post('campaign_id'))->get('staff');
 				    	if ($chk->num_rows() ==0) {
 				    		
 							$this->db->insert('staff', array(
-								'staff_id' => $staff_code,
-								'staff_code' => $staff_code,
+								'staff_id' => $staff_id,
+								'staff_code' => $staff_id,
 								'name' => $name,
 								'position' => $position,
 								'dep_id' => $dep_id,
-								'mobile' => $mobile,
+								'mobile' => '-',
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'que' => $que,
-								'prize' => $prize,
-								'prize_type' => $prize_type,
-								'group_name' => $group,
-								'seat' => trim($seat),
-								'regis_time' => $regis_time,
-								'sort_no' => $no,	
-								'staff_type' => $staff_type,							
+								'seat' => trim($seat),		
+								'staff_type' => 'staff',			
 							));
 
 							//echo $this->db->last_query()."<BR>";
@@ -203,23 +202,18 @@ class Member extends Front {
 						
 						} else {
 							
-							$this->db->where('staff_id', $chk->row()->staff_id)->update('staff', array(
-								'staff_code' => $staff_code,
+							$this->db->where('staff_id', $chk->row()->staff_id)->where('campaign_id', $this->input->post('campaign_id'))->update('staff', array(
+								'staff_id' => $staff_id,
+								'staff_code' => $staff_id,
 								'name' => $name,
 								'position' => $position,
 								'dep_id' => $dep_id,
-								'mobile' => $mobile,
+								'mobile' => '-',
 								'email' => '-',
 								'no_prize' => $no_prize,
 								'campaign_id' => $this->input->post('campaign_id'),
-								'que' => $que,
-								'prize' => $prize,
-								'prize_type' => $prize_type,
-								'group_name' => $group,
-								'seat' => trim($seat),
-								'regis_time' => $regis_time,
-								'sort_no' => $no,	
-								'staff_type' => $staff_type,								
+								'seat' => trim($seat),		
+								'staff_type' => 'staff'								
 							));
 
 						//	echo $this->db->last_query()."<BR>";
@@ -389,7 +383,7 @@ class Member extends Front {
 
 	public function reset_member($campaign_id)
 	{
-		$this->db->where('campaign_id', $campaign_id)->delete('staff');
+		$this->db->where('campaign_id', $campaign_id)->where('staff_type !=' ,'vip')->delete('staff');
 		$this->db->where('campaign_id', $campaign_id)->delete('department');
 		$this->db->where('campaign_id', $campaign_id)->update('prize', array(
 			'staff_id' => null,
@@ -452,6 +446,7 @@ class Member extends Front {
 				'shop_name' => $this->input->post('shop_name'),
 				'note' => $this->input->post('note'),
 				'status' => $status,
+				'seat' => $this->input->post('seat'),
 			));
 		} else {
 			if ($this->input->post('checkin') == 1) {
@@ -469,6 +464,7 @@ class Member extends Front {
 				'shop_name' => $this->input->post('shop_name'),
 				'note' => $this->input->post('note'),
 				'status' => $status,
+				'seat' => $this->input->post('seat'),
 			));
 		}
 
@@ -517,6 +513,7 @@ class Member extends Front {
 			'shop_name' => $this->input->post('shop_name'),
 			'note' => $this->input->post('note'),
 			'status' => $status,
+			'seat' => $this->input->post('seat'),
 		));
 
 		
