@@ -1,6 +1,8 @@
 <?php
 include('mysql.php');
 
+/*
+
 $force_group = isset($_GET['force_group']) ? mysql_real_escape_string($_GET['force_group']) : '';
 
 
@@ -35,9 +37,6 @@ while($row = mysql_fetch_assoc($result)){
 	}
 }
 
-/*
-$query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND `checkin` IS NOT NULL AND staff.campaign_id = 'kerry' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
-*/
 
 $query = "SELECT `staff`.*, `department`.`dep_name` as `staff_dep`  FROM `staff`,`department` WHERE `staff`.`dep_id` = `department`.`dep_id` AND staff.campaign_id = 'kerry' AND no_prize = 1 AND `staff`.`prize_id` IS NULL ".$filter_sql."  ORDER BY RAND() LIMIT ".$total;
 
@@ -52,7 +51,7 @@ if (mysql_num_rows($result) == 0) {
 		'prize_name' => '- - - - -',
 		'users' => array(
 			array(
-				'staff_id' => '00000',
+				'staff_id' => '000000',
 				'name' => 'รอสักครู่ กำลังรอรางวัล'
 			)
 		)
@@ -110,21 +109,13 @@ if (mysql_num_rows($result) == 0) {
 		}
 	}
 }
-/*
+*/
 
 $data = array();
 
 
 $rand = rand(0, 1);
 
-if ($force_group == '1') {
-	$rand = 1;
-}
-
-
-if ($force_group == 'group') {
-	$rand = 0;
-}
 
 
 
@@ -164,7 +155,7 @@ if ($rand == 0) {
 
 	$message = 'คุณ ทดสอบ ได้รางวัลลำดับที่ 2 เที่ยวญี่ปุ่น 1 วัน 1 คืน';
 	
-}*/
+}
 
 
 
