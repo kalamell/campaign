@@ -66,7 +66,7 @@ if (mysql_num_rows($result) == 0) {
 				'users' => array(
 					array(
 						'staff_id' =>  $row['staff_id'],
-						'name' => 'คุณ'.$row['name'],
+						'name' => $row['name'],
 					)
 				)
 			);
@@ -91,7 +91,7 @@ if (mysql_num_rows($result) == 0) {
 
 				$member[] = array(
 					'staff_id' =>  $row['staff_id'],
-					'name' => 'คุณ'.$row['name'],
+					'name' => $row['name'],
 				);
 				mysql_query ("UPDATE `staff` SET `prize_id` = '".$prize_id."', `prize_date` = NOW() WHERE `staff_id` = '".$row['staff_id']."' LIMIT 1");
 
