@@ -1,7 +1,7 @@
 <?php
 include('mysql.php');
 
-/*
+
 
 $force_group = isset($_GET['force_group']) ? mysql_real_escape_string($_GET['force_group']) : '';
 
@@ -109,7 +109,8 @@ if (mysql_num_rows($result) == 0) {
 		}
 	}
 }
-*/
+
+/*
 
 $data = array();
 
@@ -125,7 +126,7 @@ if ($rand == 0) {
 	$users = array();
 	for($i=1; $i<=20; $i++) {
 		$users[] = array(
-			'staff_id' => sprintf('%05d', $i),
+			'staff_id' => sprintf('%06d', $i),
 			'name' => 'นาย ทดสอบ นามสกุลที่'.$i,
 		);
 	}
@@ -147,7 +148,7 @@ if ($rand == 0) {
 		'prize_name' => 'เที่ยวญี่ปุ่น 1 วัน 1 คืน',
 		'users' => array(
 			array(
-				'staff_id' => '00001',
+				'staff_id' => '000001',
 				'name' => 'นายเดียว มาทดสอบ'
 			)
 		)
@@ -156,7 +157,7 @@ if ($rand == 0) {
 	$message = 'คุณ ทดสอบ ได้รางวัลลำดับที่ 2 เที่ยวญี่ปุ่น 1 วัน 1 คืน';
 	
 }
-
+*/
 
 
 echo json_encode($data);

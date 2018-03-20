@@ -5,6 +5,8 @@ class Main extends Front {
 
 	public function index()
 	{
+
+		
 		
 		$campaign_id = 'major01';
 
