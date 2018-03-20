@@ -31,12 +31,7 @@ if (mysql_num_rows($rs) > 0) {
 		$staff = $f_staff;
 	}
 
-
-
-
 	if ($boots['type_boot'] == 'register') {
-
-		
 			
 		if ($staff['no_prize'] == '0') {
 			$sql = "UPDATE staff SET no_prize = 1 WHERE staff_id = '".$ex[0]."' AND campaign_id = '".$ex[1]."'";
