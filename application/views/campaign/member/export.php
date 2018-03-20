@@ -26,12 +26,9 @@
 			<?php foreach($boot as $b):?>
 				<th><?php echo $b->boot_name;?></th>
 			<?php endforeach;?>
-			<th>รอบลงทะเบียน</th>
-			<th>คิวรับรางวัล</th>
+			
 			<th>ที่นั่ง</th>
-			<th>ประเภทรางวัล</th>
-			<th>ชื่อรางวัล</th>
-			<th>Area</th>
+			<th>ประเภทสมาชิก</th>
 
 		</tr>
 	</thead>
@@ -65,11 +62,8 @@
 						<th><?php echo countBoot($b->boot_id, $r->staff_id);?></th>
 					<?php endforeach;?>
 
-					<td><?php echo $r->regis_time;?></td>
-					<td><?php echo $r->que;?></td>
 					<td><?php echo $r->seat;?></td>
-					<td><?php echo $r->prize_type;?></td>
-					<td><?php echo $r->prize;?></td>
+					<td><?php echo $r->staff_type;?></td>
 		
 					
 					

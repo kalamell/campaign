@@ -69,17 +69,6 @@
 			  			</select>
 			  		</div>
 
-			  		<div class="form-group">
-			  			<label>แสดงสถานะ</label>	
-			  			<select name="staff_type" class="form-control">
-			  				<option value="">ดูทั้งหมด</option>
-			  				<option value="staff"  <?php echo $this->session->userdata('staff_type') == 'staff' ? 'selected' :'';?>>พนักงาน</option>
-			  				<option value="vip"  <?php echo $this->session->userdata('staff_type') == 'vip' ? 'selected' :'';?>>VIP</option>
-			  			</select>
-			  		</div>
-
-
-
 			  		<button type="submit" class="btn btn-default btn-sm" name="search"> ค้นหา</button>
 			  	<?php echo form_close();?>
 
@@ -99,9 +88,9 @@
 			  			<tr>
 			  				
 			  				<th width="120">รหัสประจำตัว</th>
+			  				<th>รอบลงทะเบียน</th>
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
-			  				<th>ที่นั่ง</th>
 			  				<th>ข้อมูล</th>
 			  				<th>สถานะ</th>
 			  				<th>วันที่เข้างาน</th>
@@ -119,29 +108,26 @@
 			  						
 
 			  						<td><?php echo $r->staff_id;?></td>
-			  						
+			  						<td><?php echo $r->regis_time;?></td>
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
-			  						<td><?php echo $r->seat;?></td>
 			  						<td>ตำแหน่ง : <?php echo $r->position;?>
 			  							<br> หน่วยงาน : <?php echo $r->dep_name;?>
 			  							<br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 
-			  							<br>เลขที่นั่ง : <?php echo $r->seat;?>
-
-			  							<?php if ($r->company != null):?>
-			  								<br>บริษัท : <?php echo $r->company;?>
-			  						<?php endif;?>
-			  							
+			  							<?php if ($r->no_prize == 1):?>
+			  								<strong>
+			  								<br>คิวที่ <?php echo $r->que;?> <br>รางวัล <?php echo $r->prize;?><br>เลขที่นั่ง <?php echo $r->seat;?>
+			  								</strong>
+			  							<?php endif;?>
 			  						</td>
 			  						<td><?php echo $r->staff_type == '' ? '-' : $r->staff_type;?></td>
-
 			  						<td style="text-align: center;"><?php echo $r->checkin == null ? '<a href="'.site_url('member/checkin/'.$r->campaign_id.'/'.$r->id).'" class="btn btn-sm btn-default">เข้างาน</a>' : '<label class="label label-success">'.$r->checkin.'</label>';?></td>
 
 			  						<td>
 			  							<?php if ($r->no_prize == '2'):?>
 			  								&nbsp;
 			  							<?php else:?>
-			  								<?php echo $r->prize_name;?>
+			  								<?php echo $r->prize;?>
 			  							<?php endif;?>
 			  								</td>
 			  						<td width="200">
@@ -149,9 +135,7 @@
 			  								<a data-toggle="modal" data-remote="false" data-target="#myModal" href="<?php echo site_url('member/edit_member/'.$r->campaign_id.'/'.$r->id);?>" class="btn btn-sm btn-default"><i class="fa fa-edit"></i></a>
 			  								<a href="<?php echo site_url('member/delete_staff/'.$r->campaign_id.'/'.$r->id);?>" onclick="javascript:return confirm('ต้องการลบหรือไม่ ?');"  class="btn btn-sm btn-default"><i class="fa fa-trash"></i></a>
 
-<!--<a href="<?php echo site_url('event/'.$r->campaign_id.'/code/'.$r->staff_id);?>?type=print"class="btn btn-sm btn-default"><i class="fa fa-barcode"></i></a>-->
-
-<a href="<?php echo site_url('staff/id/'.$r->staff_id);?>?type=print"class="btn btn-sm btn-default"><i class="fa fa-barcode"></i></a>
+<a href="<?php echo site_url('event/'.$r->campaign_id.'/code/'.$r->staff_id);?>?type=print"class="btn btn-sm btn-default"><i class="fa fa-barcode"></i></a>
 
 			  							</div>
 			  						</td>

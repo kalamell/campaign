@@ -29,6 +29,13 @@
         padding-bottom: 20px;
       }
     </style>
+
+    <script type="text/javascript">
+      <?php if ($this->input->get('type') == 'print'):?>
+      window.print();
+      <?php endif;?>
+
+    </script>
     
   </head>
   <body>
