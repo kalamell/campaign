@@ -69,6 +69,17 @@
 			  			</select>
 			  		</div>
 
+			  		<div class="form-group">
+			  			<label>แสดงสถานะ</label>	
+			  			<select name="staff_type" class="form-control">
+			  				<option value="">ดูทั้งหมด</option>
+			  				<option value="staff"  <?php echo $this->session->userdata('staff_type') == 'staff' ? 'selected' :'';?>>พนักงาน</option>
+			  				<option value="vip"  <?php echo $this->session->userdata('staff_type') == 'vip' ? 'selected' :'';?>>VIP</option>
+			  			</select>
+			  		</div>
+
+
+
 			  		<button type="submit" class="btn btn-default btn-sm" name="search"> ค้นหา</button>
 			  	<?php echo form_close();?>
 
@@ -90,6 +101,7 @@
 			  				<th width="120">รหัสประจำตัว</th>
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
+			  				<th>ที่นั่ง</th>
 			  				<th>ข้อมูล</th>
 			  				<th>สถานะ</th>
 			  				<th>วันที่เข้างาน</th>
@@ -110,6 +122,7 @@
 			  						
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
+			  						<td><?php echo $r->seat;?></td>
 			  						<td>ตำแหน่ง : <?php echo $r->position;?>
 			  							<br> หน่วยงาน : <?php echo $r->dep_name;?>
 			  							<br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 

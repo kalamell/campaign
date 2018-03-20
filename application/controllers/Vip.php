@@ -103,10 +103,10 @@ class Vip extends CI_Controller {
 			$this->db->insert('staff', array(
 				'campaign_id' => $this->campaign_id,
 				'staff_type' => 'vip',
-				'staff_id' => sprintf('%05d', 1),
-				'staff_code' => sprintf('%05d', 1),
+				'staff_id' => sprintf('%06d', 1),
+				'staff_code' => sprintf('%06d', 1),
 			));
-			return sprintf('%05d', 1);
+			return sprintf('%06d', 1);
 		} else {
 			$id = (int)$rs->row()->staff_id;
 			$id++;
@@ -114,11 +114,11 @@ class Vip extends CI_Controller {
 			$this->db->insert('staff', array(
 				'campaign_id' => $this->campaign_id,
 				'staff_type' => 'vip',
-				'staff_id' => sprintf('%05d', $id),
-				'staff_code' => sprintf('%05d', $id),
+				'staff_id' => sprintf('%06d', $id),
+				'staff_code' => sprintf('%06d', $id),
 			));
 
-			return sprintf('%05d', $id);
+			return sprintf('%06d', $id);
 		}
 	}
 

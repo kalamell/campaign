@@ -19,6 +19,15 @@
        .container {
         padding-bottom: 20px;
       }
+
+       @media print {
+        .header, .lang {
+          display: none;
+        }
+
+        p { color: #000; }
+      }
+
     </style>
 
 

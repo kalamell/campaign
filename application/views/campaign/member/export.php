@@ -18,6 +18,7 @@
 			<th>ตำแหน่ง</th>
 			<th>หน่วยงาน</th>
 			<th>เบอร์โทรศัพท์</th>
+			<th>บริษัทฯ</th>
 			<th>สถานะ</th>
 			<th>วันเข้างาน</th>
 			<th>ของรางวัล</th>
@@ -49,6 +50,7 @@
 					<td><?php echo $r->name;?></td>
 					<td><?php echo $r->position;?></td>
 					<td><?php echo $r->dep_name;?></td>
+					<td><?php echo $r->company;?></td>
 					<td><?php echo $r->mobile;?> </td>
 					<td><?php echo $r->status;?></td>
 					<td><?php echo $r->checkin;?></td>

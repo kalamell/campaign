@@ -289,6 +289,8 @@ class Member extends Front {
 			$this->session->set_userdata('txt', $this->input->post('txt'));
 
 			$this->session->set_userdata('per_page', $this->input->post('per_page'));
+
+			$this->session->set_userdata('staff_type', $this->input->post('staff_type'));
 			redirect('member/imp_member/'.$campaign_id);
 		}
 
@@ -296,6 +298,9 @@ class Member extends Front {
 		if ($this->session->userdata('txt')) {
 			$this->db->like('staff.staff_id', $this->session->userdata('txt'))
 				->or_like('staff.name', $this->session->userdata('txt'));
+			if ($this->session->userdata('staff_type')) {
+				$this->db->where('staff_type', $this->session->userdata('staff_type'));
+			}
 		}
 
 		$this->total = $this->cp->getStaff($campaign_id);
@@ -338,11 +343,16 @@ class Member extends Front {
 				->or_like('staff.name', $this->session->userdata('txt'));
 		}
 
+		if ($this->session->userdata('staff_type')) {
+				$this->db->where('staff_type', $this->session->userdata('staff_type'));
+			}
+
 		$this->rs = $this->cp->getStaff($campaign_id, $config['per_page'], $this->uri->segment(4));
 
 
 		$this->comein = $this->db->where('campaign_id', $campaign_id)->where('checkin IS NOT NULL', null, false)->count_all_results('staff');
 		$this->notcome = $this->db->where('campaign_id', $campaign_id)->where('checkin IS NULL', null, false)->count_all_results('staff');
+
 
 		$this->f = $this->cp->getData($campaign_id);
 		$this->txt = $this->session->userdata('txt');
@@ -447,6 +457,8 @@ class Member extends Front {
 				'note' => $this->input->post('note'),
 				'status' => $status,
 				'seat' => $this->input->post('seat'),
+				'staff_type' => $this->input->post('staff_type'),
+				'company' => $this->input->post('company'),
 			));
 		} else {
 			if ($this->input->post('checkin') == 1) {
@@ -465,6 +477,8 @@ class Member extends Front {
 				'note' => $this->input->post('note'),
 				'status' => $status,
 				'seat' => $this->input->post('seat'),
+				'staff_type' => $this->input->post('staff_type'),
+				'company' => $this->input->post('company'),
 			));
 		}
 

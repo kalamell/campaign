@@ -40,6 +40,12 @@
       <input type="text" class="form-control required" value="" id="dep_name" name="dep_name" placeholder="ชื่อผู้ใช้งาน">
     </div>
 
+
+    <div class="form-group col-md-12">
+      <label for="company">บริษัทฯ</label>
+      <input type="text" class="form-control required" value="" id="company" name="company" placeholder="บริษัทฯ">
+    </div>
+
     
 
     <div class="form-group col-md-6">
@@ -77,11 +83,30 @@
 
       <div class="radio">
         <label>
-          <input type="radio" name="no_prize" value="2" id="no_prize"> ลงทะเบียนอย่างเดียว 
+          <input type="radio" name="no_prize" value="2" id="no_prize"> ลงทะเบียนอย่างเดียว (ไม่รับรางวัล)
         </label>
       </div>
 
     </div>
+
+    <div class="form-group col-md-6">
+      <label>สถานะสมาชิก</label>
+      <div class="radio">
+        <label>
+          <input type="radio" name="staff_type" value="staff" id="staff_type" checked="checked"> พนักงาน 
+        </label>
+      </div>
+
+      <div class="radio">
+        <label>
+          <input type="radio" name="staff_type" value="vip" id="staff_type"> VIP 
+        </label>
+      </div>
+
+
+    </div>
+
+
 
     
 

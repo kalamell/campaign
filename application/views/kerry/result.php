@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <title>Kerry</title>
+    <title>Kerry Express Party</title>
 
     <link rel="stylesheet" href="<?php echo base_url();?>assets/kerry/kerry/font/font.css">
     <link rel="stylesheet" href="<?php echo base_url();?>assets/kerry/kerry/css/normalize.css">
@@ -12,8 +12,17 @@
 
     <style type="text/css">
       label.error { display: none !important; }
-      .header img {
-        width: 90%;
+      @media print {
+        .header {
+          display: none;
+        }
+
+        p { color: #000; }
+      }
+      @media only screen and (max-width: 600px) {
+        .header img {
+          width: 90%;
+        }
       }
 
       .container {
