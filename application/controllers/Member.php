@@ -166,14 +166,16 @@ class Member extends Front {
 
 				    	list($no, $staff_id, $name, $position, $comp_code, $seat, $status1, $status2, $status, $no_prize) = explode(',', $data);
 
-				    	if (trim($no_prize) == 'no') {
+				    	if (trim($no_prize) == 'ไม่จับรางวัล') {
 				    		$no_prize = 2;
 				    	} else {
+				    		/*
 				    		if (trim($status) == 'จับรางวัล') {
 				    			$no_prize = 1;
 				    		} else {
 				    			$no_prize = 0;
-				    		}
+				    		}*/
+				    		$no_prize = 1;
 				    	}
 
 				    	
@@ -350,8 +352,13 @@ class Member extends Front {
 		$this->rs = $this->cp->getStaff($campaign_id, $config['per_page'], $this->uri->segment(4));
 
 
-		$this->comein = $this->db->where('campaign_id', $campaign_id)->where('checkin IS NOT NULL', null, false)->count_all_results('staff');
-		$this->notcome = $this->db->where('campaign_id', $campaign_id)->where('checkin IS NULL', null, false)->count_all_results('staff');
+		$this->comein = $this->db->where('campaign_id', $campaign_id)
+						->where('staff.name IS NOT NULL', null, false)
+						->where('checkin IS NOT NULL', null, false)->count_all_results('staff');
+
+		$this->notcome = $this->db->where('campaign_id', $campaign_id)
+						->where('staff.name IS NOT NULL', null, false)
+						->where('checkin IS NULL', null, false)->count_all_results('staff');
 
 
 		$this->f = $this->cp->getData($campaign_id);
@@ -738,7 +745,7 @@ class Member extends Front {
 
 		
 
-		$this->department = $this->db->where('campaign_id', $campaign_id)->get('department')->result();
+		$this->department = $this->db->where('campaign_id', $campaign_id)->order_by('dep_name', 'ASC')->get('department')->result();
 		$this->campaign_id = $campaign_id;
 		$this->load->view('campaign/prize/add', $this);
 	}
@@ -752,7 +759,7 @@ class Member extends Front {
 
 		
 
-		$this->department = $this->db->where('campaign_id', $campaign_id)->get('department')->result();
+		$this->department = $this->db->where('campaign_id', $campaign_id)->order_by('dep_name', 'ASC')->get('department')->result();
 		$this->campaign_id = $campaign_id;
 		$this->r = $this->db->where('id', $prize_id)->get('prize')->row();
 		$this->load->view('campaign/prize/edit', $this);
