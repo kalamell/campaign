@@ -52,6 +52,7 @@
         <div class="description">
           <p class="sm">QR Code ของคุณ</p>
           <p class="name"><span><?php echo $r->name;?></span></p>
+          <p class="name"><span><?php echo $r->mobile;?></span></p>
         </div>
       </div>
       

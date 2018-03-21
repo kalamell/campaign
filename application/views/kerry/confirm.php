@@ -35,6 +35,7 @@
           <input type="text" class="input" value="<?php echo $r->staff_id;?>" disabled>
           <input type="hidden" name="staff_id" value="<?php echo $r->staff_id;?>">
           <p class="name"><span><?php echo $r->name;?></span></p>
+          <p class="name"><span><?php echo $r->mobile;?></span></p>
         
 
           <p class="sm">*กรุณาตรวจสอบความถูกต้องก่อนกดยืนยัน</p>

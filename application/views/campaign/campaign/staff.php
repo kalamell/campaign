@@ -39,7 +39,9 @@
 			  	<div class="form-group">
 			  		<input type="file" class="form-control" name="file"> 
 			  		<button type="submit" class="btn btn-info btn-sm"><i class="fa fa-cloud"></i> Upload</button>
-			  		 <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">ล้างข้อมูล</a>
+			  		 <a href="<?php echo site_url('member/reset_member/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-warning btn-sm">ล้างข้อมูลทั้งหมด</a>
+
+			  		 <a href="<?php echo site_url('member/reset_entrance/'.$f->campaign_id);?>" onclick="javascript:return confirm('ต้องการ ยกเลิกการจับรางวัลหรือไม่ ?');" class="btn btn-default btn-sm">Reset การเข้างาน</a>
 
 
 			  		  <a href="<?php echo site_url('member/export_member/'.$f->campaign_id);?>" onclick="" class="btn btn-success btn-sm">ส่งออก Excel</a>

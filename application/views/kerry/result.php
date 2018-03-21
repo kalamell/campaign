@@ -49,6 +49,7 @@
         <div class="description">
           <p class="sm">QR Code ของคุณ</p>
           <p class="name"><span><?php echo $r->name;?></span></p>
+          <p class="name"><span><?php echo $r->mobile;?></span></p>
           <p class="seat-number"><span>เลขที่นั่ง</span> <?php echo $r->seat;?></p>
         </div>
       </div>

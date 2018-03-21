@@ -407,6 +407,15 @@ class Member extends Front {
 	}
 
 
+	public function reset_entrance($campaign_id)
+	{
+		$this->db->where('campaign_id', $campaign_id)->update('staff', array(
+			'checkin' => null
+		));
+
+		redirect('member/imp_member/'.$campaign_id);
+	}
+
 	public function add_member($campaign_id)
 	{
 		$this->campaign_id = $campaign_id;

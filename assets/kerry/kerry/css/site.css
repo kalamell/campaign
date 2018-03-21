@@ -43,9 +43,9 @@ input {
 }
 
 .header {
-    height: 368px;
+/*    height: 368px;
     padding-top: 200px;
-    background: url(../img/header.png) no-repeat top center;
+    background: url(../img/header.png) no-repeat top center;*/
 }
 
 .sub {
