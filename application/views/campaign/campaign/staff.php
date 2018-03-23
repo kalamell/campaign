@@ -103,7 +103,7 @@
 			  				<th width="120">รหัสประจำตัว</th>
 			  				<th>รหัสพนักงาน</th>
 			  				<th width="200">ชื่อ - นามสกุล</th>
-			  				<th>ที่นั่ง</th>
+			  				<th>สิทธิ์การรับรางวัล</th>
 			  				<th>ข้อมูล</th>
 			  				<th>สถานะ</th>
 			  				<th>วันที่เข้างาน</th>
@@ -124,7 +124,22 @@
 			  						
 			  						<td><?php echo $r->staff_code;?></td>
 			  						<td><?php echo $r->name;?></td>
-			  						<td><?php echo $r->seat;?></td>
+			  						<td>
+			  							<?php 
+
+			  							if ($r->no_prize == 0) {
+			  								echo 'รับรางวัลและต้องลงทะเบียน';
+			  							}
+
+			  							if ($r->no_prize == 1) {
+			  								echo 'รับรางวัลไม่ต้องผ่านลงทะเบียน';
+			  							}
+
+			  							if ($r->no_prize == 2) {
+			  								echo 'ลงทะเบียนอย่างเดียว (ไม่รับรางวัล)';
+			  							}
+			  							?>
+			  						</td>
 			  						<td>ตำแหน่ง : <?php echo $r->position;?>
 			  							<br> หน่วยงาน : <?php echo $r->dep_name;?>
 			  							<br>เบอร์โทรศัพท์ : <?php echo $r->mobile;?> 

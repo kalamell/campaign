@@ -120,14 +120,11 @@
 			  							
 			  						</td>
 			  						<td>
-			  							<?php if ($r->total > 1):?>
+			  
 			  								<div class='btn-group'>
 			  								<a class="btn btn-sm btn-info" target="_blank" href="<?php echo site_url('member/prize_group/'.$r->campaign_id.'/'.$r->prize_id);?>">จับแบบกลุ่ม</a>
 			  								
 			  							</div>
-			  							<?php else:?>
-			  								&nbsp;
-			  							<?php endif;?>
 			  						</td>
 			  						
 			  					</tr>

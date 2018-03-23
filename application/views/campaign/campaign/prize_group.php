@@ -99,7 +99,7 @@
 				</div>
 			<?php endif;?>
 	</div>
-	<script type="text/javascript" src="<?php echo base_url();?>assets/js/jquery.min.js"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 	<script type="text/javascript">
 $('html, body').css('background-image', "url('<?php echo base_url('assets/img/reward-group-background.jpg');?>')");
 

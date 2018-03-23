@@ -654,7 +654,7 @@ class Member extends Front {
 		
 		
 
-		$msg = 'คุณ'.$ex[0]. ' '.$staff_id.' ได้รับรางวัล'.$rs->label.' ติดต่อรับรางวัลที่บริษัทฯ';
+		$msg =  $ex[0]. ' '.$staff_id.' ได้รับรางวัล'.$rs->label;
 		sendsms($rs->mobile, $msg);
 
 		$this->updatesms($staff_id);
